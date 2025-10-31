@@ -14,11 +14,10 @@ use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('users', UserController::class);
 Route::resource('opas', OpaController::class);
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::resource('activities', ActivityController::class);
 Route::get('/activities/events', [ActivityController::class, 'getEvents']);
