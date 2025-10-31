@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('activity_id')->nullable()->constrained('activities')->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('content');
+            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->string('file_path')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->string('name');
+            $table->string('code')->unique();
+            $table->enum('status', ['available', 'borrowed', 'damaged', 'lost'])->default('available');
+            $table->enum('condition', ['new', 'good', 'bad', 'broken'])->default('good');
+            $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('activity_documents', function (Blueprint $table) {
+        Schema::create('activity_documentations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade');
+            $table->string('photo_path')->nullable();
+            $table->string('google_drive_link')->nullable();
             $table->timestamps();
         });
     }

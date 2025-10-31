@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->enum('activity_type', ['meeting', 'basic training', 'exploration', 'anniversary', 'others']);
+            $table->enum('color', ['danger', 'success', 'primary', 'warning']);
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('location');
+            $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
