@@ -9,8 +9,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
-        eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template
+        MAPALA UBSI
     </title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
