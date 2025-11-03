@@ -13,7 +13,7 @@ class ActivityDocumentSeeder extends Seeder
      */
     public function run(): void
     {
-         $photos = [
+        $photos = [
             'documentations/image-01.png',
             'documentations/image-02.png',
             'documentations/image-03.png',
@@ -29,7 +29,13 @@ class ActivityDocumentSeeder extends Seeder
             // Setiap activity punya 1–2 dokumentasi
             $photoCount = rand(1, 2);
 
-            foreach (array_rand($photos, $photoCount) as $key) {
+            // Ambil acak 1 atau 2 foto dari array
+            $keys = array_rand($photos, $photoCount);
+            if (!is_array($keys)) {
+                $keys = [$keys]; // ubah ke array agar foreach tetap bisa jalan
+            }
+
+            foreach ($keys as $key) {
                 $data[] = [
                     'activity_id' => $activityId,
                     'photo_path' => 'storage/' . $photos[$key],
