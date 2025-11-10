@@ -18,6 +18,21 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
+
+        /* === Z-INDEX untuk overlay dan panel detail === */
+        .hs-overlay,
+        [x-show="showDetail"] {
+            z-index: 999999 !important;
+        }
+
+        body.hs-overlay-open {
+            overflow: hidden;
+        }
+
+        /* Overlay gelap biar nutupi semua elemen lain */
+        .fixed.inset-0.bg-black\/50 {
+            z-index: 999998 !important;
+        }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -40,7 +55,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             @include('components.header')
 
             <main>
-                <div class="p-4 max-w-(--breakpoint-2xl) md:p-6 lg:mx-10">
+                <div class="p-2 max-w-(--breakpoint-2xl) md:p-2 lg:m-2">
 
                     @yield('content')
 

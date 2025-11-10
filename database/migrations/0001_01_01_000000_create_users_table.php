@@ -20,10 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('major')->nullable();
             $table->string('generation')->nullable();
+            $table->string('batch')->nullable();
             $table->string('photo')->nullable();
             $table->date('birth_date')->nullable();
             $table->enum('status', ['active', 'inactive', 'alumni'])->default('active');
-            $table->enum('gender', ['male', 'female']);
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->enum('position', ['leader', 'secretary', 'logistics', 'member'])->default('member');
             $table->enum('role', ['admin', 'logistics', 'member'])->default('member');
             $table->softDeletes();

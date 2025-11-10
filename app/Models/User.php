@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'major',
         'generation',
+        'batch',
         'photo',
         'birth_date',
         'status',
