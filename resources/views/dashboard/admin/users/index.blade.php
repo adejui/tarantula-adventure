@@ -611,7 +611,29 @@
                 });
                 const html = await response.text();
                 tableContainer.innerHTML = html;
+
+                // 🧠 Tambahkan ini supaya modal & komponen aktif lagi
+                if (window.HSStaticMethods) {
+                    window.HSStaticMethods.autoInit();
+                }
+
+                // 🧩 Tambahkan ulang event listener untuk form delete (karena DOM diganti)
+                initDeleteForms();
             }
+
+            // Fungsi untuk inisialisasi ulang tombol/form delete
+            function initDeleteForms() {
+                const deleteForms = document.querySelectorAll('form.btn-delete');
+                deleteForms.forEach(form => {
+                    form.addEventListener('submit', function(e) {
+                        const confirmed = confirm('Yakin ingin menghapus data ini?');
+                        if (!confirmed) e.preventDefault();
+                    });
+                });
+            }
+
+            // Jalankan sekali di awal
+            initDeleteForms();
 
             // 🔍 Pencarian otomatis
             searchInput.addEventListener("input", function() {
@@ -629,11 +651,11 @@
                 btn.addEventListener("click", function() {
                     currentStatus = this.dataset.value;
                     statusBtnLabel.innerHTML = this.textContent + `
-                <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                    width='24' height='24' viewBox='0 0 24 24' fill='none'
-                    stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                    <path d='m6 9 6 6 6-6'/>
-                </svg>`;
+            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
+                width='24' height='24' viewBox='0 0 24 24' fill='none'
+                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <path d='m6 9 6 6 6-6'/>
+            </svg>`;
                     fetchData();
                 });
             });
@@ -643,11 +665,11 @@
                 btn.addEventListener("click", function() {
                     currentMajor = this.dataset.value;
                     majorBtnLabel.innerHTML = this.textContent + `
-                <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                    width='24' height='24' viewBox='0 0 24 24' fill='none'
-                    stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                    <path d='m6 9 6 6 6-6'/>
-                </svg>`;
+            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
+                width='24' height='24' viewBox='0 0 24 24' fill='none'
+                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <path d='m6 9 6 6 6-6'/>
+            </svg>`;
                     fetchData();
                 });
             });
@@ -657,11 +679,11 @@
                 btn.addEventListener("click", function() {
                     currentGeneration = this.dataset.value;
                     generationBtnLabel.innerHTML = this.textContent + `
-                <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                    width='24' height='24' viewBox='0 0 24 24' fill='none'
-                    stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                    <path d='m6 9 6 6 6-6'/>
-                </svg>`;
+            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
+                width='24' height='24' viewBox='0 0 24 24' fill='none'
+                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                <path d='m6 9 6 6 6-6'/>
+            </svg>`;
                     fetchData();
                 });
             });
@@ -677,33 +699,10 @@
 
             // Reset Filter
             resetBtn.addEventListener("click", function() {
-                // Reset variabel
                 currentStatus = "all";
                 currentMajor = "all";
                 currentGeneration = "all";
                 searchInput.value = "";
-
-                // Reset label dropdown
-                statusBtnLabel.innerHTML = "Semua Status" + `
-            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                width='24' height='24' viewBox='0 0 24 24' fill='none'
-                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                <path d='m6 9 6 6 6-6'/>
-            </svg>`;
-                majorBtnLabel.innerHTML = "Semua Prodi" + `
-            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                width='24' height='24' viewBox='0 0 24 24' fill='none'
-                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                <path d='m6 9 6 6 6-6'/>
-            </svg>`;
-                generationBtnLabel.innerHTML = "Semua Angkatan" + `
-            <svg class='hs-dropdown-open:rotate-180 size-4' xmlns='http://www.w3.org/2000/svg'
-                width='24' height='24' viewBox='0 0 24 24' fill='none'
-                stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-                <path d='m6 9 6 6 6-6'/>
-            </svg>`;
-
-                // Refresh tabel ke default
                 fetchData();
             });
         });

@@ -20,7 +20,6 @@ Route::resource('users', UserController::class);
 Route::put('/users/{id}/photo', [UserController::class, 'updatePhoto'])->name('users.update-photo');
 Route::delete('/users/{id}/photo', [UserController::class, 'deletePhoto'])->name('users.delete-photo');
 
-// Route::get('/generate-nrp', [UserController::class, 'generateNRP'])->name('generate.nrp');
 Route::get('/generate-nrp-password', [UserController::class, 'generateNrpPassword'])->name('generate.nrp.password');
 
 
