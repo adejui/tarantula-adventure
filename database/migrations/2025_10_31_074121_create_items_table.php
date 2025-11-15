@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->integer('quantity');
             // $table->enum('status', ['available', 'borrowed', 'damaged', 'lost'])->default('available');
-            $table->enum('condition', ['new', 'good', 'bad', 'broken'])->default('good');
+            // $table->enum('condition', ['new', 'good', 'bad', 'broken'])->default('good');
             $table->text('description')->nullable();
             $table->softDeletes();
             $table->timestamps();

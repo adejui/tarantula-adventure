@@ -29,7 +29,9 @@ Route::resource('activities', ActivityController::class);
 Route::get('/activities/events', [ActivityController::class, 'getEvents']);
 
 Route::resource('items', ItemController::class);
-Route::get('/items/generate-code/{category_id}', [ItemController::class, 'generateCode']);
+// Route::get('/items/generate-code/{category_id}', [ItemController::class, 'generateCode']);
+Route::get('/items/generate-code/{category}', [ItemController::class, 'generateCode']);
+
 
 Route::resource('categories', CategoryController::class);
 

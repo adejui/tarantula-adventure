@@ -13,8 +13,7 @@ class Item extends Model
         'category_id',
         'name',
         'code',
-        'status',
-        'condition',
+        'quantity',
         'description',
     ];
 

@@ -33,6 +33,18 @@
         .fixed.inset-0.bg-black\/50 {
             z-index: 999998 !important;
         }
+
+        /* Sembunyikan scrollbar tapi tetap bisa scroll */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            /* untuk Internet Explorer dan Edge lama */
+            scrollbar-width: none;
+            /* untuk Firefox */
+        }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -218,7 +218,7 @@
                     <!-- Menu Item Inventoris -->
                     <li x-data="{
                         selected: '',
-                        isActive: {{ in_array(Route::currentRouteName(), ['items.index', 'categories.index']) ? 'true' : 'false' }}
+                        isActive: {{ request()->routeIs('items.*') || request()->routeIs('categories.*') ? 'true' : 'false' }}
                     }">
                         <a href="#" @click.prevent="selected = (selected === 'Inventoris' ? '' : 'Inventoris')"
                             class="menu-item font-normal group rounded-lg py-3.5 flex items-center relative"
@@ -227,77 +227,74 @@
                                 'bg-[#3A1096]/50 text-white' :
                                 'menu-item-inactive text-gray-700 dark:text-gray-300'">
 
-                            <!-- Icon -->
-                            @if (in_array(Route::currentRouteName(), ['items.index', 'categories.index']))
-                                {{-- Aktif --}}
+                            <!-- ICON -->
+                            @if (request()->routeIs('items.*') || request()->routeIs('categories.*'))
+                                <!-- Aktif -->
                                 <img src="{{ asset('assets/images/icons/box-dark.svg') }}"
-                                    alt="Inventoris Icon Active (Light Mode)" class="menu-item-icon ms-1 dark:hidden"
-                                    width="24" height="24">
+                                    class="menu-item-icon ms-1 dark:hidden" width="24" height="24">
                                 <img src="{{ asset('assets/images/icons/box-dark.svg') }}"
-                                    alt="Inventoris Icon Active (Dark Mode)"
                                     class="menu-item-icon ms-1 hidden dark:inline" width="24" height="24">
                             @else
-                                {{-- Tidak aktif --}}
+                                <!-- Tidak aktif -->
                                 <img src="{{ asset('assets/images/icons/box.svg') }}"
-                                    alt="Inventoris Icon (Light Mode)" class="menu-item-icon ms-1 dark:hidden"
-                                    width="24" height="24">
+                                    class="menu-item-icon ms-1 dark:hidden" width="24" height="24">
                                 <img src="{{ asset('assets/images/icons/box-dark.svg') }}"
-                                    alt="Inventoris Icon (Dark Mode)" class="menu-item-icon ms-1 hidden dark:inline"
-                                    width="24" height="24">
+                                    class="menu-item-icon ms-1 hidden dark:inline" width="24" height="24">
                             @endif
 
-                            <!-- Label -->
+                            <!-- LABEL -->
                             <span class="menu-item-text transition-colors duration-200"
-                                :class="[
-                                    sidebarToggle ? 'lg:hidden' : '',
-                                    isActive ? 'text-white' : 'text-black dark:text-gray-300'
+                                :class="[sidebarToggle ? 'lg:hidden' : '', isActive ? 'text-white' :
+                                    'text-black dark:text-gray-300'
                                 ]">
                                 Inventoris
                             </span>
 
-                            <!-- Panah -->
+                            <!-- ARROW -->
                             <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current transition-all duration-200"
                                 :class="[
-                                    isActive ?
-                                    'rotate-180 text-white' :
-                                    (selected === 'Inventoris' ?
-                                        'rotate-180 text-black dark:text-gray-300' :
-                                        'text-black dark:text-gray-300'),
+                                    (selected === 'Inventoris' || isActive) ? 'rotate-180 text-white' :
+                                    'text-black dark:text-gray-300',
                                     sidebarToggle ? 'lg:hidden' : ''
                                 ]"
                                 width="20" height="20" viewBox="0 0 20 20" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
+
                                 <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke-width="1.5"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
 
                         </a>
 
-                        <!-- Dropdown -->
+                        <!-- DROPDOWN -->
                         <div class="translate transform overflow-hidden"
                             :class="(selected === 'Inventoris' || isActive) ? 'block' : 'hidden'">
-                            <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'"
-                                class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
 
+                            <ul class="menu-dropdown mt-2 flex flex-col gap-1 pl-9"
+                                :class="sidebarToggle ? 'lg:hidden' : 'flex'">
+
+                                <!-- LIST ITEM -->
                                 <li>
                                     <a href="{{ route('items.index') }}"
                                         class="menu-dropdown-item group font-normal py-3.5
-                        {{ Route::currentRouteName() == 'items.index'
+                        {{ request()->routeIs('items.*')
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
                                         Daftar Alat
                                     </a>
                                 </li>
 
+                                <!-- CATEGORY -->
                                 <li>
                                     <a href="{{ route('categories.index') }}"
                                         class="menu-dropdown-item group font-normal py-3.5
-                        {{ Route::currentRouteName() == 'categories.index'
+                        {{ request()->routeIs('categories.*')
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
                                         Kategori
                                     </a>
                                 </li>
+
                             </ul>
                         </div>
                     </li>
