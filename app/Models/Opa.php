@@ -14,7 +14,7 @@ class Opa extends Model
         'organization_name',
         'campus_name',
         'phone_number',
-        'address',
+        'email',
     ];
 
     public function loans()

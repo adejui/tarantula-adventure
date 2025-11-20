@@ -55,39 +55,6 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function generateCode($categoryId)
-    // {
-    //     $category = Category::findOrFail($categoryId);
-    //     $name = $category->name;
-
-    //     // Buat 3 huruf otomatis tapi tetap mudah dibaca dan unik
-    //     $words = explode(' ', $name);
-
-    //     if (count($words) >= 2) {
-    //         // Ambil huruf pertama dari 2 kata pertama + huruf terakhir dari kata terakhir
-    //         $prefix = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1) . substr(end($words), -1));
-    //     } else {
-    //         // Kalau cuma 1 kata, ambil 3 huruf pertama
-    //         $prefix = strtoupper(substr($words[0], 0, 3));
-    //     }
-
-    //     // Cari kode terakhir dari kategori ini
-    //     $latestItem = Item::where('category_id', $categoryId)
-    //         ->orderBy('id', 'desc')
-    //         ->first();
-
-    //     if ($latestItem && preg_match('/-(\d{3})$/', $latestItem->code, $matches)) {
-    //         $number = (int)$matches[1] + 1;
-    //     } else {
-    //         $number = 1;
-    //     }
-
-    //     $formattedNumber = str_pad($number, 3, '0', STR_PAD_LEFT);
-    //     $code = "{$prefix}-{$formattedNumber}";
-
-    //     return response()->json(['code' => $code]);
-    // }
-
     public function generateCode($categoryId)
     {
         $category = Category::findOrFail($categoryId);

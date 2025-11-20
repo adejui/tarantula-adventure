@@ -251,7 +251,7 @@
                                 <p class="text-theme-xs text-error-500 mt-1.5">{{ $message }}</p>
                             @enderror
                         </div>
-                            
+
                         <!-- Dropzone -->
                         <label for=""
                             class="text-[#616161] font-medium text-xs mb-2 block text-md dark:text-gray-400">Foto
