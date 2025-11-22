@@ -25,8 +25,8 @@ Route::get('/generate-nrp-password', [UserController::class, 'generateNrpPasswor
 
 Route::resource('opas', OpaController::class);
 
-Route::resource('activities', ActivityController::class);
 Route::get('/activities/events', [ActivityController::class, 'getEvents']);
+Route::resource('activities', ActivityController::class);
 
 Route::resource('items', ItemController::class);
 // Route::get('/items/generate-code/{category_id}', [ItemController::class, 'generateCode']);

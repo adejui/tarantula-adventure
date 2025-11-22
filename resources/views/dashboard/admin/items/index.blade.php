@@ -143,13 +143,13 @@
         </div>
 
         <template x-teleport="body">
-            <div x-cloak x-show="showForm" class="fixed inset-0 z-[99999] flex items-center justify-end">
+            <div x-cloak x-show="showForm" class="fixed inset-0 z-index flex items-center justify-end">
                 <div class="absolute inset-0 bg-black/50" @click="showForm = false"></div>
 
                 <div x-show="showForm" x-transition:enter="transform transition ease-in-out duration-500"
                     x-transition:enter-start="translate-x-full opacity-0"
                     x-transition:enter-end="translate-x-0 opacity-100"
-                    class="relative mr-8 z-[100000] bg-white dark:bg-gray-800 w-full sm:w-[500px] max-h-[90vh] my-10 shadow-2xl border border-gray-200 dark:border-neutral-700 p-6 overflow-y-auto rounded-2xl scrollbar-hide">
+                    class="relative mr-8 z-index bg-white dark:bg-gray-800 w-full sm:w-[500px] max-h-[90vh] my-10 shadow-2xl border border-gray-200 dark:border-neutral-700 p-6 overflow-y-auto rounded-2xl scrollbar-hide">
 
                     <div class="flex justify-between items-center pb-3 mb-4">
                         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Form Alat</h2>

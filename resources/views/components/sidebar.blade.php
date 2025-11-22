@@ -186,7 +186,7 @@
                         {{ Route::currentRouteName() == 'activities.index'
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
-                                        Daftar Kegiatan
+                                        Kalender Kegiatan
                                     </a>
                                 </li>
 
@@ -196,7 +196,7 @@
                         {{ Route::currentRouteName() == 'activity-members.index'
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
-                                        Anggota Kegiatan
+                                        Daftar Kegiatan
                                     </a>
                                 </li>
 

@@ -76,25 +76,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Klik tanggal → tambah event
         dateClick: function (info) {
-            window.openAddEventModal(info.dateStr);
+            const modal = document.querySelector("#asu");
+            if (!modal) return console.error("Modal tidak ditemukan!");
+
+            const content = modal.querySelector("[data-hs-overlay-content]");
+            content.classList.remove("translate-x-full"); // slide in
+            content.classList.add("-translate-x-10");
+
+            // Isi tanggal
+            const startDateInput = modal.querySelector(
+                'input[name="start_date"]'
+            );
+            if (startDateInput) startDateInput.value = info.dateStr;
+
+            modal.classList.remove("hidden");
         },
 
         // Klik event → edit event
         eventClick: function (info) {
-            const eventData = info.event.extendedProps ?? {};
+            const event = info.event.extendedProps;
+            openModal("editEventModal");
 
-            window.openEditEventModal({
-                id: info.event.id,
-                title: info.event.title,
-                activity_type: eventData.activity_type ?? "",
-                start_date: info.event.startStr?.split("T")[0] ?? "",
-                end_date:
-                    info.event.endStr?.split("T")[0] ??
-                    info.event.startStr?.split("T")[0] ??
-                    "",
-                location: eventData.location ?? "",
-                description: eventData.description ?? "",
-            });
+            const form = document.querySelector("#editEventForm");
+            if (form) {
+                form.action = `/activities/${info.event.id}`;
+            }
+
+            document.querySelector("#edit-id").value = info.event.id;
+            document.querySelector("#edit-title").value = info.event.title;
+            document.querySelector("#edit-type").value = event.activity_type;
+            document.querySelector("#edit-location").value =
+                event.location || "";
+            document.querySelector("#edit-start").value =
+                info.event.startStr.split("T")[0];
+            document.querySelector("#edit-end").value = info.event.endStr
+                ? info.event.endStr.split("T")[0]
+                : info.event.startStr.split("T")[0];
+            document.querySelector("#edit-description").value =
+                event.description || "";
+
+            document
+                .querySelectorAll('#editEventModal input[name="color"]')
+                .forEach((radio) => {
+                    radio.checked = false;
+                });
+
+            if (event.color) {
+                const selectedColor = document.querySelector(
+                    `#editEventModal input[name="color"][value="${event.color}"]`
+                );
+                if (selectedColor) {
+                    selectedColor.checked = true;
+                }
+            }
         },
     });
 

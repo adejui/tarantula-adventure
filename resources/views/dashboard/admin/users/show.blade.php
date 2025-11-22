@@ -18,14 +18,6 @@
                             class="h-full w-full object-cover rounded-3xl" />
                     @endif
                 </div>
-                {{-- <a href="{{ route('users.edit', $user->id) }}" title="Edit"
-                    class="p-2 mt-6 border-2 border-gray-300 dark:border-gray-700 w-full rounded-xl dark:text-white focus:outline-none cursor-pointer flex items-center justify-center">
-                    <img src="{{ asset('assets/images/icons/pencil-line.svg') }}" alt="Edit"
-                        class="h-4 w-4 block dark:hidden">
-                    <img src="{{ asset('assets/images/icons/pencil-line-dark.svg') }}" alt="Edit"
-                        class="h-4 w-4 hidden dark:block">
-                    <span class="ml-2 text-sm text-[#212121]">Edit</span>
-                </a> --}}
             </div>
 
             <!-- INFORMASI -->

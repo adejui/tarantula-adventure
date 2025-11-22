@@ -25,6 +25,10 @@
             z-index: 999999 !important;
         }
 
+        .z-index {
+            z-index: 100000;
+        }
+
         body.hs-overlay-open {
             overflow: hidden;
         }

@@ -226,13 +226,13 @@
 
         <!-- Modal Form -->
         <template x-teleport="body">
-            <div x-cloak x-show="showForm" class="fixed inset-0 z-[99999] flex justify-end">
+            <div x-cloak x-show="showForm" class="fixed inset-0 z-index flex justify-end">
                 <div class="absolute inset-0 bg-black/50" @click="showForm = false"></div>
 
                 <div x-show="showForm" x-transition:enter="transform transition ease-in-out duration-500"
                     x-transition:enter-start="translate-x-full opacity-0"
                     x-transition:enter-end="translate-x-0 opacity-100"
-                    class="relative z-[100000] bg-white dark:bg-neutral-900 w-full sm:w-[450px] h-full shadow-2xl border-l border-gray-200 dark:border-neutral-700 p-6 overflow-y-auto rounded-l-2xl">
+                    class="relative z-index bg-white dark:bg-neutral-900 w-full sm:w-[450px] h-full shadow-2xl border-l border-gray-200 dark:border-neutral-700 p-6 overflow-y-auto rounded-l-2xl">
                     <div class="flex justify-between items-center border-b pb-3 mb-6">
                         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Form Anggota</h2>
                         <button @click="showForm = false"

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->enum('activity_type', ['meeting', 'basic training', 'exploration', 'anniversary', 'others']);
-            $table->enum('color', ['danger', 'success', 'primary', 'warning']);
+            $table->enum('color', ['danger', 'success', 'primary', 'warning', 'orange']);
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location');
