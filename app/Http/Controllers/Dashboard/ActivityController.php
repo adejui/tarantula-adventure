@@ -53,11 +53,17 @@ class ActivityController extends Controller
 
     public function index()
     {
-        $perPage = request('perPage', 5); // default 10
+        $today = now()->startOfDay();
+
+        $upcomingSchedules = Activity::where('start_date', '>=', $today)
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        $perPage = request('perPage', 5);
 
         $activities  = Activity::paginate($perPage);
 
-        return view('dashboard.admin.activities.index', compact('activities'));
+        return view('dashboard.admin.activities.index', compact('activities', 'upcomingSchedules'));
     }
 
     public function listActivity(Request $request)

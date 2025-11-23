@@ -769,9 +769,76 @@
         });
     </script>
 
-    <div class="p-0">
+    <div class="p-0 grid grid-cols-5">
 
-        <div id="calendar" class="bg-white dark:bg-gray-900 p-0 rounded-xl shadow"></div>
+        <div class="col-span-3">
+            <div id="calendar" class="bg-white dark:bg-gray-900 p-0 rounded-xl shadow"></div>
+        </div>
+
+
+
+        <div class="col-span-2 ps-4">
+            <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 sm:p-6">
+                <div class="mb-6 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                        Kegiatan Mendatang
+                    </h3>
+                </div>
+
+                <div class="custom-scrollbar max-w-full overflow-x-auto">
+                    <div class="">
+                        <div class="flex flex-col gap-2">
+
+                            <div class="flex h-[505px] flex-col mt-3">
+                                <div class="custom-scrollbar flex h-auto flex-col overflow-y-auto pr-3">
+                                    @forelse ($upcomingSchedules as $upcomingSchedule)
+                                        <div class="ps-2 my-2 first:mt-0">
+                                            <h3 class="text-xs font-medium uppercase text-gray-500 dark:text-neutral-400">
+                                                {{ \Carbon\Carbon::parse($upcomingSchedule->start_date)->translatedFormat('l, j F Y') }}
+                                            </h3>
+                                        </div>
+
+                                        <div
+                                            class="flex gap-x-3 relative group rounded-lg hover:bg-gray-100 dark:hover:bg-white/10">
+                                            <div class="z-1 absolute inset-0"></div>
+
+                                            <div
+                                                class="relative last:after:hidden after:absolute after:top-0 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-neutral-700 dark:group-hover:after:bg-neutral-600">
+                                                <div class="relative z-10 size-7 flex justify-center items-center">
+                                                    <div
+                                                        class="size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600 dark:bg-neutral-800 dark:border-neutral-600 dark:group-hover:border-neutral-600">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="grow p-2 pb-8">
+                                                <h3
+                                                    class="flex gap-x-1.5 mb-1 text-theme-sm font-medium text-gray-800 dark:text-gray-400">
+                                                    {{ $upcomingSchedule->title ?? 'Nama Kegiatan' }}
+                                                </h3>
+
+                                                @if ($upcomingSchedule->description)
+                                                    <p class="mt-1 text-theme-xs text-gray-500 dark:text-gray-400">
+                                                        {{ $upcomingSchedule->description }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <p class="text-gray-500 text-sm">Tidak ada jadwal mendatang.</p>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
     </div>
 @endsection
