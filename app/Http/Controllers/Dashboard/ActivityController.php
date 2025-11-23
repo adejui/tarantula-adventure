@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\User;
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use App\Models\ActivityPhoto;
+use App\Models\ActivityMember;
+use App\Models\ActivityDocument;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreActivityRequest;
 use App\Http\Requests\UpdateActivityRequest;
 
@@ -51,9 +56,34 @@ class ActivityController extends Controller
         $perPage = request('perPage', 5); // default 10
 
         $activities  = Activity::paginate($perPage);
+
         return view('dashboard.admin.activities.index', compact('activities'));
     }
 
+    public function listActivity(Request $request)
+    {
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+        $type = $request->get('type');
+
+        $query = Activity::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%");
+            });
+        }
+
+        if ($type && $type !== 'all') $query->where('activity_type', $type);
+
+        $activities = $query->paginate($perPage)->appends($request->all());
+
+        if ($request->ajax()) {
+            return view('dashboard.admin.activities.partials.table', compact('activities'))->render();
+        }
+
+        return view('dashboard.admin.activities.list', compact('activities'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -91,15 +121,46 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        //
+        $activity_documentation = ActivityDocument::where('activity_id', $activity->id)
+            ->latest()
+            ->first() ?? null;
+
+        $activity_photos = ActivityPhoto::where('activity_id', $activity->id)
+            ->latest()
+            ->take(12)
+            ->get();
+
+        $activity_members = ActivityMember::where('activity_id', $activity->id)->get();
+
+        return view('dashboard.admin.activities.detail', compact('activity', 'activity_members', 'activity_documentation', 'activity_photos'));
     }
 
+    public function manage(Activity $activity)
+    {
+        // dd($activity);
+
+        $generations = User::whereNotNull('generation')
+            ->distinct()
+            ->orderBy('generation', 'asc')
+            ->pluck('generation');
+
+
+        $selectedMembers = ActivityMember::where('activity_id', $activity->id)
+            ->pluck('user_id')
+            ->toArray();
+
+        $activityDocument = ActivityDocument::where('activity_id', $activity->id)->first();
+
+        $users = User::where('role', '!=', 'admin')->get();
+
+        return view('dashboard.admin.activities.manage', compact('users', 'activity', 'activityDocument', 'selectedMembers', 'generations'));
+    }
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Activity $activity)
     {
-        //
+        return view('dashboard.admin.activities.edit');
     }
 
     /**
@@ -130,6 +191,36 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
-        //
+        if ($activity->divsc_photos) {
+            foreach ($activity->divsc_photos as $photo) {
+
+                if ($photo->photo_path && Storage::disk('public')->exists($photo->photo_path)) {
+                    Storage::disk('public')->delete($photo->photo_path);
+                }
+
+                $photo->delete();
+            }
+        }
+
+        if ($activity->activity_photos) {
+            foreach ($activity->activity_photos as $photo) {
+
+                if ($photo->photo_path && Storage::disk('public')->exists($photo->photo_path)) {
+                    Storage::disk('public')->delete($photo->photo_path);
+                }
+
+                $photo->delete();
+            }
+        }
+
+        $activity->documentations()->delete(); // TIDAK hapus file storage
+        $activity->members()->delete();
+        $activity->articles()->delete();
+
+        $activity->delete();
+
+        return redirect()
+            ->route('list.activity')
+            ->with('success', 'Activity & seluruh foto terkait berhasil dihapus.');
     }
 }

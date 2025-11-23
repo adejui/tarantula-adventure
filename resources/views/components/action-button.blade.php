@@ -11,6 +11,10 @@
             'hover' => 'hover:bg-yellow-100 dark:hover:bg-gray-800',
             'icon' => 'pencil-line',
         ],
+        'manage' => [
+            'hover' => 'hover:bg-blue-100 dark:hover:bg-gray-800',
+            'icon' => 'sliders-horizontal',
+        ],
         'delete' => [
             'hover' => 'hover:bg-red-100 dark:hover:bg-gray-800',
             'icon' => 'trash',

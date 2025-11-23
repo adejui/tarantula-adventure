@@ -120,7 +120,14 @@
                     <!-- Menu Item Kegiatan -->
                     <li x-data="{
                         selected: '',
-                        isActive: {{ in_array(Route::currentRouteName(), ['activities.index', 'activity-members.index', 'activity-documents.index']) ? 'true' : 'false' }}
+                        isActive: {{ in_array(Route::currentRouteName(), [
+                            'activities.index',
+                            'list.activity',
+                            'manage.activity',
+                            'activities.show',
+                        ])
+                            ? 'true'
+                            : 'false' }}
                     }">
                         <a href="#" @click.prevent="selected = (selected === 'Kegiatan' ? '' : 'Kegiatan')"
                             class="menu-item font-normal group rounded-lg py-3.5 flex items-center relative"
@@ -130,7 +137,7 @@
                                 'menu-item-inactive text-gray-700 dark:text-gray-300'">
 
                             <!-- Icon -->
-                            @if (in_array(Route::currentRouteName(), ['activities.index', 'activity-members.index', 'activity-documents.index']))
+                            @if (in_array(Route::currentRouteName(), ['activities.index', 'manage.activity', 'list.activity', 'activities.show']))
                                 {{-- Aktif --}}
                                 <svg class="menu-item-icon ms-1" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -182,31 +189,15 @@
 
                                 <li>
                                     <a href="{{ route('activities.index') }}"
-                                        class="menu-dropdown-item group font-normal py-3.5
-                        {{ Route::currentRouteName() == 'activities.index'
-                            ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
-                            : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
+                                        class="menu-dropdown-item group font-normal py-3.5 {{ Route::currentRouteName() == 'activities.index' ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white' : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
                                         Kalender Kegiatan
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('activity-members.index') }}"
-                                        class="menu-dropdown-item group font-normal py-3.5
-                        {{ Route::currentRouteName() == 'activity-members.index'
-                            ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
-                            : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
+                                    <a href="{{ route('list.activity') }}"
+                                        class="menu-dropdown-item group font-normal py-3.5 {{ in_array(Route::currentRouteName(), ['list.activity', 'manage.activity', 'activities.show']) ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white' : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
                                         Daftar Kegiatan
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('activity-documents.index') }}"
-                                        class="menu-dropdown-item group font-normal py-3.5
-                        {{ Route::currentRouteName() == 'activity-documents.index'
-                            ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
-                            : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
-                                        Dokumentasi Kegiatan
                                     </a>
                                 </li>
                             </ul>

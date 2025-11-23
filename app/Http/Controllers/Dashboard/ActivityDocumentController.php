@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ActivityDocument;
+use App\Http\Controllers\Controller;
 
 class ActivityDocumentController extends Controller
 {
@@ -28,8 +29,27 @@ class ActivityDocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'activity_id'        => 'required|exists:activities,id',
+            'google_drive_link'  => 'nullable|string|max:255',
+        ], [
+            'activity_id.required' => 'Kegiatan wajib dipilih.',
+            'activity_id.exists'   => 'Kegiatan yang dipilih tidak valid.',
+
+            'google_drive_link.string' => 'Link Google Drive harus berupa teks.',
+            'google_drive_link.max'    => 'Link Google Drive maksimal 255 karakter.',
+        ]);
+
+        // HAPUS dokumentasi lama milik activity yang sama
+        ActivityDocument::where('activity_id', $validated['activity_id'])->delete();
+
+        // Simpan dokumentasi baru
+        ActivityDocument::create($validated);
+
+        return redirect()->back()->with('success', 'Dokumentasi kegiatan berhasil diperbarui!');
     }
+
+
 
     /**
      * Display the specified resource.

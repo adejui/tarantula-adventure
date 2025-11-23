@@ -29,6 +29,11 @@ class Activity extends Model
         return $this->hasMany(ActivityDocument::class);
     }
 
+    public function activity_photos()
+    {
+        return $this->hasMany(ActivityPhoto::class);
+    }
+
     public function articles()
     {
         return $this->hasMany(Article::class);

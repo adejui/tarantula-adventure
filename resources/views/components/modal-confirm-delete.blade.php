@@ -12,7 +12,7 @@
 </button>
 
 <div id="{{ $id }}"
-    class="hs-overlay hidden size-full fixed top-0 start-0 z-[100] overflow-x-hidden overflow-y-auto pointer-events-none"
+    class="hs-overlay hidden size-full fixed top-0 start-0 z-index overflow-x-hidden overflow-y-auto pointer-events-none"
     role="dialog" tabindex="-1" aria-labelledby="{{ $id }}-label">
 
     <div

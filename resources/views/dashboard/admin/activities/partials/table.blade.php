@@ -5,7 +5,7 @@
             <th class="py-3 text-left">
                 <div class="flex items-center">
                     <p class="font-medium text-theme-md dark:text-gray-400">
-                        Nama
+                        Nama Kegiatan
                     </p>
                 </div>
             </th>
@@ -13,7 +13,7 @@
             <th class="py-3 hidden lg:table-cell text-left">
                 <div class="flex items-center">
                     <p class="font-medium text-theme-md dark:text-gray-400">
-                        Prodi
+                        Tanggal Mulai
                     </p>
                 </div>
             </th>
@@ -21,15 +21,7 @@
             <th class="py-3 hidden md:table-cell text-left">
                 <div class="flex items-center justify-center">
                     <p class="font-medium text-theme-md dark:text-gray-400">
-                        Angkatan
-                    </p>
-                </div>
-            </th>
-
-            <th class="py-3 hidden lg:table-cell text-center">
-                <div class="flex items-center justify-center">
-                    <p class="font-medium text-theme-md dark:text-gray-400">
-                        Status
+                        Tanggal Selesai
                     </p>
                 </div>
             </th>
@@ -47,21 +39,29 @@
     <!-- table header end -->
 
     <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
-        @forelse ($users as $user)
+        @forelse ($activities as $activity)
             <tr>
                 <td class="py-3">
                     <div class="flex items-center">
                         <div class="flex items-center gap-3">
-                            <div class="h-11 w-11">
-                                <img src="{{ $user->photo ? asset('storage/' . $user->photo) : asset('storage/imgUsers/default-image.png') }}"
-                                    alt="Foto Profil" class="h-full w-full object-cover rounded-3xl">
-                            </div>
                             <div>
                                 <p class="font-medium text-[#2E2E2E] text-theme-sm dark:text-white/90">
-                                    {{ $user->full_name }}
+                                    {{ $activity->title }}
                                 </p>
                                 <span class="text-[#2E2E2E] text-theme-xs dark:text-gray-400">
-                                    {{ $user->nrp }}
+                                    @if ($activity->activity_type == 'meeting')
+                                        Rapat
+                                    @elseif($activity->activity_type == 'basic training')
+                                        Diksar
+                                    @elseif($activity->activity_type == 'exploration')
+                                        Pengembaraan
+                                    @elseif($activity->activity_type == 'anniversary')
+                                        Hari Jadi
+                                    @elseif($activity->activity_type == 'others')
+                                        Lain-lain
+                                    @else
+                                        Tidak diketahui
+                                    @endif
                                 </span>
                             </div>
                         </div>
@@ -69,29 +69,23 @@
                 </td>
                 <td class="py-3 hidden lg:table-cell">
                     <p class="text-[#2E2E2E] text-theme-sm dark:text-gray-400">
-                        {{ $user->major }}
+                        {{ \Carbon\Carbon::parse($activity->start_date)->translatedFormat('d F Y') }}
                     </p>
                 </td>
                 <td class="py-3 hidden md:table-cell">
                     <div class="flex items-center justify-center">
                         <p class="text-[#2E2E2E] text-theme-sm dark:text-gray-400">
-                            {{ $user->generation }}
+                            {{ \Carbon\Carbon::parse($activity->end_date)->translatedFormat('d F Y') }}
                         </p>
                     </div>
                 </td>
-                <td class="py-3 hidden lg:table-cell">
-                    <div class="flex items-center justify-center">
-                        <x-status-badge :status="$user->status" />
-                    </div>
-                </td>
-
                 <td class="py-3">
                     <div class="flex items-center justify-center">
                         <p class="text-[#2E2E2E] text-theme-sm dark:text-gray-400">
                         <div class="flex justify-center items-center gap-2">
-                            <x-action-button type="detail" :url="route('users.show', $user->id)" title="Detail" />
-                            <x-action-button type="edit" :url="route('users.edit', $user->id)" title="Edit" />
-                            <x-modal-confirm-delete :id="'delete-user-' . $user->id" :action="route('users.destroy', $user->id)" :item="$user->full_name" />
+                            <x-action-button type="detail" :url="route('activities.show', $activity->id)" title="Detail" />
+                            <x-action-button type="manage" :url="route('manage.activity', $activity->id)" title="Manage" />
+                            <x-modal-confirm-delete :id="'delete-activity-' . $activity->id" :action="route('activities.destroy', $activity->id)" :item="$activity->title" />
                         </div>
                         </p>
                     </div>
@@ -101,9 +95,9 @@
             <tr>
                 <td colspan="5" class="px-3 py-6 text-center text-gray-500 dark:text-gray-400">
                     @if (request('search'))
-                        Data anggota tidak ditemukan.
+                        Data kegiatan tidak ditemukan.
                     @else
-                        Belum ada data anggota.
+                        Belum ada data kegiatan.
                     @endif
                 </td>
             </tr>
@@ -112,5 +106,5 @@
 </table>
 
 <div class="mt-4">
-    {{ $users->appends(request()->query())->links() }}
+    {{ $activities->appends(request()->query())->links() }}
 </div>

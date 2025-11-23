@@ -15,7 +15,7 @@ class ActivitySeeder extends Seeder
     public function run(): void
     {
         $activityTypes = ['meeting', 'basic training', 'exploration', 'anniversary', 'others'];
-        $colors = ['danger', 'success', 'primary', 'warning'];
+        $colors = ['danger', 'success', 'primary', 'warning', 'orange'];
 
         $titles = [
             'Rapat Koordinasi Pendakian Gunung Lawu',

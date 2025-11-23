@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ActivityDocument extends Model
+class ActivityPhoto extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'activity_documentations';
     protected $fillable = [
         'activity_id',
-        'google_drive_link',
+        'photo_path',
     ];
 
     public function activity()
