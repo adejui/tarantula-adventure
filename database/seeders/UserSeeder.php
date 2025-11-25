@@ -14,6 +14,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+
+        User::create([
+            'email' => 'admin@gmail.com',
+            'full_name' => 'Admin SiOpal',
+            'password' => bcrypt('password'),
+            'position' => 'leader',
+            'role' => 'admin',
+        ]);
+
+
         User::insert([
             [
                 'full_name' => 'Andi Pratama',
@@ -28,8 +38,8 @@ class UserSeeder extends Seeder
                 'birth_date' => '2003-07-14',
                 'status' => 'active',
                 'gender' => 'male',
-                'position' => 'leader',
-                'role' => 'admin',
+                'position' => 'member',
+                'role' => 'member',
             ],
             [
                 'full_name' => 'Dewi Lestari',
