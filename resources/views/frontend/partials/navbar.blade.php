@@ -93,6 +93,53 @@
                     Sign In
                 </a>
             </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10">
+
+                <p class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-4">Hubungi Kami</p>
+
+                <div class="space-y-4 text-sm text-gray-400 mb-8">
+                    <a href="mailto:tarantula@ubsi.ac.id"
+                        class="flex items-center gap-3 hover:text-white transition-colors">
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#7C3AED]">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <span>tarantula@ubsi.ac.id</span>
+                    </a>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#7C3AED]">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <span>+62 274 123456</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-[#7C3AED] flex-shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <span>UBSI Yogyakarta Campus<br>Jl. Ringroad Barat, Gamping</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-4">
+                    <a href="#"
+                        class="flex-1 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#7C3AED] hover:text-white transition-all">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                    </a>
+                    <a href="#"
+                        class="flex-1 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#7C3AED] hover:text-white transition-all">
+                        <i class="fa-brands fa-facebook-f text-lg"></i>
+                    </a>
+                    <a href="#"
+                        class="flex-1 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:bg-[#7C3AED] hover:text-white transition-all">
+                        <i class="fa-brands fa-twitter text-lg"></i>
+                    </a>
+                </div>
+
+                <div class="mt-8 text-center text-xs text-gray-600">
+                    &copy; 2025 Tarantula Adventure
+                </div>
+            </div>
+            
         </div>
-    </div>
 </nav>
