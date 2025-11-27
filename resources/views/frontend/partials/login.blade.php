@@ -46,14 +46,29 @@
                         <p class="mt-2 text-sm text-gray-500">Masukkan email dan password kamu.</p>
                     </div>
 
-                    <form action="{{ route('login') }}" method="POST" class="space-y-5">
+                    <form action="{{ route('login.authenticate') }}" method="POST" class="space-y-5">
+
                         @csrf
+
+                        @if ($errors->has('email'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm"
+                                role="alert">
+                                {{ $errors->first('email') }}
+                            </div>
+                        @endif
+
                         <div>
                             <label
                                 class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email</label>
-                            <input type="email" name="email" required
-                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm"
+
+                            <input type="email" name="email" value="{{ old('email') }}" required
+                                class="block w-full px-4 py-3 border rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm
+                                @error('email') border-red-500 ring-red-500 @else border-gray-200 @enderror"
                                 placeholder="nama@email.com">
+
+                            @error('email')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
@@ -61,14 +76,15 @@
                                 <label
                                     class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Password</label>
                             </div>
+
                             <input type="password" name="password" required
-                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm"
+                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm"
                                 placeholder="••••••••">
                         </div>
 
                         <div class="flex items-center justify-between text-sm">
                             <label class="flex items-center cursor-pointer">
-                                <input type="checkbox"
+                                <input type="checkbox" name="remember"
                                     class="w-4 h-4 rounded border-gray-300 text-[#7C3AED] focus:ring-[#7C3AED]">
                                 <span class="ml-2 text-gray-600">Ingat saya</span>
                             </label>
