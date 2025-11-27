@@ -50,7 +50,8 @@
                 <i
                     class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 group-hover:text-white transition-colors text-xs"></i>
             </div>
-            <a href="login.html"
+            <a href="javascript:void(0)"
+                @click="loginOpen = true"
                 class="px-5 py-2 rounded-lg font-semibold text-sm transition-all duration-300 bg-[#7C3AED] text-white border-2 border-[#7C3AED] hover:bg-[#6D28D9] hover:border-[#6D28D9] shadow-lg hover:scale-105">
                 Sign In
             </a>
@@ -88,7 +89,7 @@
             </a>
 
             <div class="border-t border-white/10 pt-6 flex flex-col gap-4 mt-4">
-                <a href="login.html"
+                <a href="javascript:void(0)" @click="loginOpen = true; document.getElementById('mobile-menu').classList.add('hidden')"
                     class="block w-full text-center py-3 rounded-xl bg-[#7C3AED] text-white font-semibold hover:bg-[#6D28D9] transition-colors shadow-lg">
                     Sign In
                 </a>

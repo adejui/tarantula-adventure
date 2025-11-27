@@ -7,19 +7,24 @@
     <link rel="shortcut icon" href="{{ asset('frontend/images/logo.jpeg') }}" type="image/x-icon">
     <title>Tarantula Adventure</title>
 
-
+    
 
     @vite(['resources/css/frontend.css', 'resources/js/app.js'])
 
 
     <link href="{{ asset('frontend/css/aos.css') }}" rel="stylesheet">
+    <style>
+        [x-cloak] { 
+            display: none !important; 
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </head>
 
-<body class="text-white m-0 p-0 overflow-x-hidden antialiased">
+<body x-data="{ loginOpen: false }" class="text-white m-0 p-0 overflow-x-hidden antialiased">
     <div id="preloader"
         class="fixed inset-0 z-[9999] bg-gray-900 flex items-center justify-center transition-opacity duration-500">
         <div class="flex flex-col items-center gap-4">
@@ -48,6 +53,8 @@
     </main>
 
     @include('frontend.partials.footer')
+
+    @include('frontend.partials.login')
 
     <script src="{{ asset('frontend/js/aos.js') }}"></script>
 
