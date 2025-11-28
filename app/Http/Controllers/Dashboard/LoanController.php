@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Loan;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller
@@ -10,9 +11,36 @@ class LoanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+        $status = $request->get('status');
+
+        $query = Loan::where('status', '!=', 'rejected');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+
+                $q->whereHas('user', function ($u) use ($search) {
+                    $u->where('full_name', 'like', "%{$search}%");
+                })
+                    ->orWhereHas('opa', function ($o) use ($search) {
+                        $o->where('name', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+
+        if ($status && $status !== 'all') $query->where('status', $status);
+
+        $loans = $query->paginate($perPage)->appends($request->all());
+
+        if ($request->ajax()) {
+            return view('dashboard.loans.partials.table', compact('loans'))->render();
+        }
+
+        return view('dashboard.loans.index', compact('loans'));
     }
 
     /**

@@ -15,6 +15,14 @@
             'hover' => 'hover:bg-blue-100 dark:hover:bg-gray-800',
             'icon' => 'sliders-horizontal',
         ],
+        'acc' => [
+            'hover' => 'hover:bg-green-100 dark:hover:bg-green-800',
+            'icon' => 'check',
+        ],
+        'reject' => [
+            'hover' => 'hover:bg-red-100 dark:hover:bg-red-800',
+            'icon' => 'x',
+        ],
         'delete' => [
             'hover' => 'hover:bg-red-100 dark:hover:bg-gray-800',
             'icon' => 'trash',
