@@ -18,10 +18,13 @@ use App\Http\Controllers\Dashboard\LoanDetailController;
 use App\Http\Controllers\Dashboard\ActivityPhotoController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
+use App\Http\Controllers\Frontend\InventoryController;
 
 // --- FRONTEND ---
 Route::name('frontend.')->group(function (){
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     
 });
 

@@ -16,10 +16,10 @@
         </button>
 
         <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-200">
-            <a href="#" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
+            <a href="{{ route('frontend.home') }}" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
                 <i class="fa-solid fa-house"></i> Home
             </a>
-            <a href="#" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
+            <a href="{{ route('frontend.inventory') }}" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
                 <i class="fa-solid fa-cube"></i> Inventaris
             </a>
 
@@ -130,7 +130,7 @@
             <a href="#" class="flex items-center gap-4 text-lg hover:text-[#7C3AED] transition-colors">
                 <i class="fa-solid fa-house w-6 text-center"></i> Home
             </a>
-            <a href="#" class="flex items-center gap-4 text-lg hover:text-[#7C3AED] transition-colors">
+            <a href="{{ route('frontend.inventory') }}" class="flex items-center gap-4 text-lg hover:text-[#7C3AED] transition-colors">
                 <i class="fa-solid fa-cube w-6 text-center"></i> Inventaris
             </a>
 
