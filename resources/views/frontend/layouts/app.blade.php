@@ -7,15 +7,13 @@
     <link rel="shortcut icon" href="{{ asset('frontend/images/logo.jpeg') }}" type="image/x-icon">
     <title>Tarantula Adventure</title>
 
-    
-
     @vite(['resources/css/frontend.css', 'resources/js/app.js'])
 
 
     <link href="{{ asset('frontend/css/aos.css') }}" rel="stylesheet">
     <style>
-        [x-cloak] { 
-            display: none !important; 
+        [x-cloak] {
+            display: none !important;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -75,12 +73,29 @@
             });
         }
 
+        /* =========================================
+           LOGIC NAVBAR & MOBILE MENU
+        ========================================= */
         const navbar = document.getElementById("navbar");
         const btn = document.getElementById("mobile-menu-btn");
         const menu = document.getElementById("mobile-menu");
         const icon = btn ? btn.querySelector("i") : null;
 
+        // 1. INI VARIABEL BARU (Wajib ada biar JS tau ini halaman apa)
+        const isHomePage = {{ Request::routeIs('frontend.home') ? 'true' : 'false' }}; 
+
         function updateNavbar() {
+
+            // 2. INI LOGIKA PENGAMAN BARU (Kalau bukan Home, Paksa Hitam & Stop)
+            if (!isHomePage) {
+                navbar.classList.add("bg-[#1c1c1c]", "shadow-lg", "py-3");
+                navbar.classList.remove("bg-transparent", "py-4", "border-white/10");
+                if (btn) btn.classList.add("text-white");
+                return; 
+            }
+            // ---------------------------------------------------------
+
+            
             const isScrolled = window.scrollY > 50;
             const isMenuOpen = menu && !menu.classList.contains("hidden");
 
@@ -97,19 +112,14 @@
 
         // --- EKSEKUSI ---
 
-        // 1. JALANKAN LANGSUNG SEKARANG JUGA! (Ini kunci fix bug refresh)
         updateNavbar();
-
-        // 2. Jalankan juga saat user scroll
         window.addEventListener("scroll", updateNavbar);
+        window.addEventListener("load", updateNavbar);
 
-        // 3. Logic Tombol Klik
         if (btn && menu && icon) {
             btn.addEventListener("click", () => {
-                // Toggle menu
                 menu.classList.toggle("hidden");
 
-                // Ganti Icon
                 if (menu.classList.contains("hidden")) {
                     icon.classList.remove("fa-xmark");
                     icon.classList.add("fa-bars");
@@ -118,7 +128,6 @@
                     icon.classList.add("fa-xmark");
                 }
 
-                // Update tampilan navbar setelah klik (biar jadi gelap kalau dibuka di posisi atas)
                 updateNavbar();
             });
         }

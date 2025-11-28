@@ -1,4 +1,4 @@
-<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-transparent py-4">
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 {{ Request::routeIs('frontend.home') ? 'bg-transparent py-4' : 'bg-[#1c1c1c] shadow-lg py-3' }}">
     <div class="flex items-center justify-between px-6 md:px-8 w-full">
         <div class="flex items-center gap-3">
             <div
