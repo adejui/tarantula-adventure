@@ -66,156 +66,77 @@
             </div>
         </div>
 
-        <div class="w-full lg:full space-y-6 py-2">
-            <div data-aos="fade-left" data-aos-delay="200"
-                class="border border-gray-300 rounded-2xl p-3 hover:shadow-lg transition duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex gap-3">
-                        <div
-                            class="inline-flex items-center bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">07 Nov 2025</span>
-                            </div>
+        <div class="w-full lg:full space-y-6">
 
-                            <div class="w-px h-5 bg-gray-200 mx-4"></div>
+            @forelse ($activities as $activity)
+                <div data-aos="fade-left" data-aos-delay="{{ $loop->iteration * 100 }}"
+                    class="border border-gray-200 rounded-2xl p-4 hover:shadow-lg transition duration-300 bg-white">
 
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">09 Nov 2025</span>
+                    <div class="flex justify-between items-start mb-4">
+
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div
+                                class="inline-flex items-center bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5 shadow-sm text-xs sm:text-sm">
+
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-regular fa-calendar text-gray-500"></i>
+                                    <span class="font-medium text-gray-700">
+                                        {{ \Carbon\Carbon::parse($activity->start_date)->format('d M Y') }}
+                                    </span>
+                                </div>
+
+                                <div class="w-px h-4 bg-gray-300 mx-2"></div>
+
+                                <div class="flex items-center gap-2">
+                                    <span class="font-medium text-gray-700">
+                                        {{ \Carbon\Carbon::parse($activity->end_date)->format('d M Y') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="flex -space-x-2">
-                        <div class="w-8 h-8 rounded-full bg-stone-600 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-rose-900 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
-                        <div
-                            class="w-8 h-8 rounded-full bg-purple-600 text-white text-[10px] flex items-center justify-center border-2 border-white font-bold">
-                            3+
+
+                        <div class="flex -space-x-2">
+
+                            @foreach ($activity->members->take(3) as $member)
+                                <div class="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200"
+                                    title="{{ $member->full_name }}">
+                                    <img src="{{ $member->photo ? asset('storage/' . $member->photo) : 'https://ui-avatars.com/api/?name=' . urlencode($member->full_name) . '&background=random&color=fff' }}"
+                                        alt="{{ $member->full_name }}" class="w-full h-full object-cover">
+                                </div>
+                            @endforeach
+
+                            @if ($activity->members->count() > 3)
+                                <div
+                                    class="w-8 h-8 rounded-full bg-[#7753AF] text-white text-[10px] flex items-center justify-center border-2 border-white font-bold">
+                                    +{{ $activity->members->count() - 3 }}
+                                </div>
+                            @endif
+
                         </div>
                     </div>
+
+                    <h3 class="text-lg font-bold text-gray-900 mb-2 leading-snug">
+                        {{ $activity->title }}
+                    </h3>
+
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                        {{ Str::limit($activity->description, 120) }}
+                    </p>
+
+                    <a href="#"
+                        class="inline-flex items-center gap-2 text-[#7753AF] font-semibold text-sm hover:underline">
+                        Lihat Detail Kegiatan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
                 </div>
-
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
-                    Pelatihan Navigasi Darat (Navrat) Dasar
-                </h3>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                    Mengajarkan kemampuan membaca peta, menggunakan kompas, memahami
-                    azimut, serta teknik orientasi di lapangan.
-                </p>
-                <a href="#" class="text-[#7753AF] font-semibold text-sm hover:underline">View Event Details</a>
-            </div>
-        </div>
-
-        <div class="w-full lg:full space-y-6 py-2">
-            <div data-aos="fade-right" data-aos-delay="400"
-                class="border border-gray-300 rounded-2xl p-3 hover:shadow-lg transition duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex gap-3">
-                        <div
-                            class="inline-flex items-center bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">07 Nov 2025</span>
-                            </div>
-
-                            <div class="w-px h-5 bg-gray-200 mx-4"></div>
-
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">09 Nov 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex -space-x-2">
-                        <div class="w-8 h-8 rounded-full bg-stone-600 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-rose-900 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
-                        <div
-                            class="w-8 h-8 rounded-full bg-purple-600 text-white text-[10px] flex items-center justify-center border-2 border-white font-bold">
-                            3+
-                        </div>
-                    </div>
+            @empty
+                <div class="p-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+                    <p class="text-gray-500 font-medium">Belum ada jadwal kegiatan terbaru.</p>
                 </div>
+            @endforelse
 
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
-                    Pelatihan Navigasi Darat (Navrat) Dasar
-                </h3>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                    Mengajarkan kemampuan membaca peta, menggunakan kompas, memahami
-                    azimut, serta teknik orientasi di lapangan.
-                </p>
-                <a href="#" class="text-[#7753AF] font-semibold text-sm hover:underline">View Event Details</a>
-            </div>
-        </div>
 
-        <div class="w-full lg:full space-y-6 py-2">
-            <div data-aos="fade-left" data-aos-delay="600"
-                class="border border-gray-300 rounded-2xl p-3 hover:shadow-lg transition duration-300">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="flex gap-3">
-                        <div
-                            class="inline-flex items-center bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm">
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">07 Nov 2025</span>
-                            </div>
 
-                            <div class="w-px h-5 bg-gray-200 mx-4"></div>
-
-                            <div class="flex items-center gap-2 cursor-pointer">
-                                <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span class="text-sm font-medium text-gray-700">09 Nov 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex -space-x-2">
-                        <div class="w-8 h-8 rounded-full bg-stone-600 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-rose-900 border-2 border-white"></div>
-                        <div class="w-8 h-8 rounded-full bg-gray-300 border-2 border-white"></div>
-                        <div
-                            class="w-8 h-8 rounded-full bg-purple-600 text-white text-[10px] flex items-center justify-center border-2 border-white font-bold">
-                            3+
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="text-lg font-bold text-gray-900 mb-2">
-                    Pelatihan Navigasi Darat (Navrat) Dasar
-                </h3>
-                <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                    Mengajarkan kemampuan membaca peta, menggunakan kompas, memahami
-                    azimut, serta teknik orientasi di lapangan.
-                </p>
-                <a href="#" class="text-[#7753AF] font-semibold text-sm hover:underline">View Event Details</a>
-            </div>
         </div>
     </section>
     <!-- jadwal end -->
