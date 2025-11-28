@@ -21,7 +21,8 @@ class LoginController extends Controller
         ]);
 
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $remember = $request->has('remember'); // Cek apakah checkbox dicentang
+        if (Auth::attempt($request->only('email', 'password'), $remember)) {
 
             $request->session()->regenerate();
 

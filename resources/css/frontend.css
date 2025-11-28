@@ -1,0 +1,13 @@
+/* resources/css/frontend.css */
+
+/* 1. Import Engine Tailwind */
+@import "tailwindcss";
+
+/* 2. Settingan KHUSUS Kamu (Frontend) */
+@theme {
+    /* Font Utama (Otomatis menimpa default font-sans jadi Poppins) */
+    --font-sans: "Poppins", sans-serif;
+
+    /* Warna Custom */
+    --color-tarantulaPurple: #7C3AED;
+}

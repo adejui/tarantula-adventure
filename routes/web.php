@@ -1,5 +1,9 @@
 <?php
 
+// --- CONTROLLERS FRONTEND ---
+use App\Http\Controllers\Frontend\HomeController;
+
+// --- CONTROLLERS BACKEND ---
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\OpaController;
@@ -15,11 +19,20 @@ use App\Http\Controllers\Dashboard\ActivityPhotoController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
 
+// --- FRONTEND ---
+Route::name('frontend.')->group(function (){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    
+});
 
+
+// --- Login ---
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+// --- BACKEND ---
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
