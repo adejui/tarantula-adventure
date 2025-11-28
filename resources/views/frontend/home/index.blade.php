@@ -233,7 +233,7 @@
             </div>
 
             <div class="flex-shrink-0">
-                <a href="#jadwal"
+                <a href="{{ route('frontend.inventory') }}"
                     class="bg-[#7753AF] hover:bg-[#5e3d8e] text-white font-medium px-6 py-3 rounded-xl transition shadow-md whitespace-nowrap">
                     Lihat Semua
                 </a>

@@ -32,7 +32,7 @@
                     class="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-40 bg-white text-gray-800 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 overflow-hidden">
                     <a href="#" class="block px-4 py-3 hover:bg-purple-100 text-purple-700"><i
                             class="fa-regular fa-newspaper mr-2"></i> Berita</a>
-                    <a href="#" class="block px-4 py-3 hover:bg-purple-100 text-purple-700"><i
+                    <a href="{{ route('frontend.kegiatan') }}" class="block px-4 py-3 hover:bg-purple-100 text-purple-700"><i
                             class="fa-solid fa-person-hiking mr-2"></i> Kegiatan</a>
                 </div>
                 <div class="absolute top-full left-0 w-full h-4 bg-transparent"></div>
@@ -142,7 +142,7 @@
                     <a href="#" class="hover:text-[#7C3AED] flex items-center gap-2 transition-colors">
                         <i class="fa-regular fa-newspaper"></i> Berita
                     </a>
-                    <a href="#" class="hover:text-[#7C3AED] flex items-center gap-2 transition-colors">
+                    <a href="" class="hover:text-[#7C3AED] flex items-center gap-2 transition-colors">
                         <i class="fa-solid fa-person-hiking"></i> Kegiatan
                     </a>
                 </div>
