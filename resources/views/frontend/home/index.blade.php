@@ -243,32 +243,53 @@
         {{-- card --}}
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
 
-            @for ($i = 0; $i < 5; $i++)
-                <div data-aos="fade-up"
-                    class="w-full bg-white border-2 border-gray-200 rounded-3xl flex flex-col hover:shadow-lg transition-shadow duration-300 overflow-hidden group">
-                    <div
-                        class="relative w-full h-56 bg-gray-100 rounded-2xl flex items-center justify-center overflow-hidden">
+            @forelse($inventoryItems as $item)
+                <div data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}"
+                    class="w-full bg-white border-2 border-gray-200 rounded-3xl flex flex-col overflow-hidden h-full hover:shadow-xl transition-shadow duration-300">
+
+                    <div class="relative w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+
                         <span
-                            class="absolute top-4 left-4 bg-black/20 backdrop-blur-sm text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide z-10">
-                            Kategori
+                            class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-700 text-[10px] font-bold px-3 py-1 rounded-full border border-gray-200 uppercase tracking-wide z-10 shadow-sm">
+                            {{ $item->category->name ?? 'Umum' }}
                         </span>
-                        <img src="{{ asset('frontend/images/tas2.jpg') }}" alt="Tas Gunung"
-                            class="w-full h-full object-contain p-6 mix-blend-multiply">
+
+                        <img src="{{ $item->photo ? asset('storage/' . $item->photo) : asset('frontend/images/tas.jpg') }}"
+                            alt="{{ $item->name }}"
+                            class="w-full h-full object-contain p-6 mix-blend-multiply transition-transform duration-500 group-hover:scale-110">
                     </div>
 
-                    <div class=" p-5 flex justify-between items-end">
+                    <div
+                        class="p-5 flex justify-between items-end flex-grow border-t border-gray-100 bg-white relative z-20">
                         <div>
-                            <h3 class="text-gray-900 font-semibold text-base leading-tight">Mountain <br> Backpack 60L</h3>
-                            <p class="text-gray-500 text-sm mt-1">2 Unit</p>
+                            <h3 class="text-gray-900 font-semibold text-base leading-tight mb-1 line-clamp-2"
+                                title="{{ $item->name }}">
+                                {{ $item->name }}
+                            </h3>
+
+                            <p class="text-gray-500 text-xs font-semibold tracking-wider mt-1">
+                                {{ $item->quantity ?? ($item->stock ?? 0) }} Unit
+                            </p>
                         </div>
+
                         <button
-                            class="w-12 h-12 bg-[#7753AF] rounded-xl flex items-center justify-center text-white hover:bg-[#5e3d8e] transition shadow-md group">
+                            class="w-12 h-12 bg-[#7753AF] rounded-xl flex items-center justify-center text-white hover:bg-[#5e3d8e] hover:scale-110 transition-all duration-300 shadow-md flex-shrink-0 group/btn">
                             <i
-                                class="fa-solid fa-arrow-right -rotate-45 group-hover:-rotate-0 transition-transform duration-300"></i>
+                                class="fa-solid fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300"></i>
                         </button>
                     </div>
+
                 </div>
-            @endfor
+
+            @empty
+                <div class="col-span-full py-12 text-center border-2 border-dashed border-gray-200 rounded-3xl bg-gray-50">
+                    <div class="inline-block p-4 bg-white rounded-full mb-3 shadow-sm">
+                        <i class="fa-solid fa-box-open text-gray-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-gray-900 font-semibold">Belum ada barang</h3>
+                    <p class="text-gray-500 text-sm mt-1">Silakan cek kembali nanti.</p>
+                </div>
+            @endforelse
 
         </div>
     </section>
