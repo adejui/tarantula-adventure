@@ -20,7 +20,7 @@ use App\Http\Controllers\Dashboard\LoanDetailController;
 use App\Http\Controllers\Dashboard\ActivityPhotoController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
-
+use App\Http\Controllers\Frontend\PublicLoanController;
 
 // --- FRONTEND ---
 Route::name('frontend.')->group(function () {
@@ -30,6 +30,7 @@ Route::name('frontend.')->group(function () {
 
     Route::get('/kegiatan', [PublicActivityController::class, 'index'])->name('kegiatan');
 
+    Route::get('/pinjaman', [PublicLoanController::class, 'create'])->name('pinjaman');
 });
 
 

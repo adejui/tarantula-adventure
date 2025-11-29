@@ -228,7 +228,7 @@
                         Pastikan barang yang dipilih sudah sesuai sebelum mengajukan peminjaman.
                     </p>
                     <div class="mt-6">
-                        <a href="#"
+                        <a href="{{ route('frontend.pinjaman') }}"
                             class="flex items-center justify-center rounded-xl border border-transparent bg-[#7C3AED] px-6 py-4 text-base font-bold text-white shadow-lg hover:bg-[#6D28D9] hover:shadow-purple-500/30 transition-all">
                             Lanjut Isi Formulir <i class="fa-solid fa-arrow-right ml-2"></i>
                         </a>
