@@ -22,6 +22,7 @@ class LoanDetailSeeder extends Seeder
                 'loan_id' => 1,
                 'item_id' => rand(1, 10), // sesuaikan jumlah item di tabel items
                 'condition_on_return' => $conditions[array_rand($conditions)],
+                'quantity' => rand(1, 10), // sesuaikan jumlah item di tabel items
                 'notes' => fake()->sentence(),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -33,6 +34,7 @@ class LoanDetailSeeder extends Seeder
             $details[] = [
                 'loan_id' => rand(2, 6), // sesuaikan jumlah loan di tabel loans
                 'item_id' => rand(1, 10),
+                'quantity' => rand(1, 10), // sesuaikan jumlah item di tabel items
                 'condition_on_return' => $conditions[array_rand($conditions)],
                 'notes' => fake()->sentence(),
                 'created_at' => now(),

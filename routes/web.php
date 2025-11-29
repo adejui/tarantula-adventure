@@ -20,9 +20,8 @@ use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
 
 // --- FRONTEND ---
-Route::name('frontend.')->group(function (){
+Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    
 });
 
 
@@ -59,8 +58,23 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('loans', LoanController::class);
     Route::get('/loans/manage/{loan}', [LoanController::class, 'manage'])->name('loans.manage');
+    Route::post('loans/{loan}/accept', [LoanController::class, 'accept'])->name('loans.accept');
+    Route::post('loans/{loan}/reject', [LoanController::class, 'reject'])->name('loans.reject');
+    Route::post('loans/{loan}/approve', [LoanController::class, 'approve'])->name('loans.approve');
+    Route::post('loans/{loan}/borrowed', [LoanController::class, 'borrowed'])->name('loans.borrowed');
 
     Route::resource('loan-details', LoanDetailController::class);
+    // Route::post('/loans/{loan}/details', [LoanController::class, 'store'])->name('loan-details.store');
+
+    // Route untuk menyimpan loan detail (item yang dipinjam)
+    // Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
+    // Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
+    Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
+
+    // Route::post('/loan-details/store', [LoanDetailController::class, 'store'])->name('loan-details.store');
+
+
+
     Route::resource('activity-members', ActivityMemberController::class);
     Route::resource('activity-documents', ActivityDocumentController::class);
     Route::resource('activity-photos', ActivityPhotoController::class);

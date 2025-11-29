@@ -37,7 +37,7 @@ class UserController extends Controller
 
 
         // Ambil semua user selain admin
-        $query = User::where('role', '!=', 'admin');
+        $query = User::where('role', '!=', 'admin')->orderBy('created_at', 'DESC');
 
         if ($search) {
             $query->where(function ($q) use ($search) {

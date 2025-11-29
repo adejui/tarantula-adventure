@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $perPage = $request->get('perPage', 5);
         $search = $request->get('search');
 
-        $query = Category::query();
+        $query = Category::query()->orderBy('created_at', 'DESC');
 
         if ($search) {
             $query->where('name', 'like', "%{$search}%");;

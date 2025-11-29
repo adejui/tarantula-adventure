@@ -72,7 +72,6 @@
                     <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
                         {{ $activity->description ?? '-' }}
                     </p>
-
                 </div>
             </div>
 

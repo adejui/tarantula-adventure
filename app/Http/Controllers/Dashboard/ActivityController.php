@@ -72,7 +72,7 @@ class ActivityController extends Controller
         $search = $request->get('search');
         $type = $request->get('type');
 
-        $query = Activity::query();
+        $query = Activity::query()->orderBy('created_at', 'DESC');
 
         if ($search) {
             $query->where(function ($q) use ($search) {

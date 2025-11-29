@@ -24,7 +24,8 @@ class ItemController extends Controller
         $search = $request->get('search');
         $category = $request->get('category');
 
-        $query = Item::query()->with('category'); // biar relasi category bisa diakses
+        $query = Item::query()->with('category')->orderBy('created_at', 'DESC');
+
 
         if (!empty($search)) {
             $query->where('name', 'like', "%{$search}%");

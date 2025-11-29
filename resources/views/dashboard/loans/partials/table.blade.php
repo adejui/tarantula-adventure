@@ -90,12 +90,27 @@
                     <div class="flex items-center justify-center">
                         <p class="text-[#2E2E2E] text-theme-sm dark:text-gray-400">
                         <div class="flex justify-center items-center gap-2">
-
-
-                            <x-action-button type="acc" :url="route('loans.index', $loan->id)" title="acc" />
-                            <x-action-button type="reject" :url="route('loans.index', $loan->id)" title="reject" />
-
-                            <x-action-button type="manage" :url="route('loans.index', $loan->id)" title="loan" />
+                            @if ($loan->status === 'requested')
+                                <x-loan-action type="acc" id="acc-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
+                                    :action="route('loans.accept', $loan->id)" />
+                                <x-loan-action type="reject" id="reject-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
+                                    :action="route('loans.reject', $loan->id)" />
+                                <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
+                            @elseif ($loan->status === 'approved')
+                                <x-loan-action type="approve" id="approve-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
+                                    :action="route('loans.approve', $loan->id)" />
+                                <x-action-button type="detail" :url="route('loans.show', $loan->id)" title="Detail" />
+                                <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
+                            @elseif ($loan->status === 'borrowed')
+                                <x-loan-action type="borrowed" id="borrowed-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
+                                    :action="route('loans.borrowed', $loan->id)" />
+                                <x-action-button type="detail" :url="route('loans.show', $loan->id)" title="Detail" />
+                                <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
+                            @else
+                                <x-modal-confirm-delete :id="'delete-loan-' . $loan->id" :action="route('loans.destroy', $loan->id)" :item="$loan->full_name" />
+                                <x-action-button type="detail" :url="route('loans.show', $loan->id)" title="Detail" />
+                                <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
+                            @endif
                         </div>
                         </p>
                     </div>

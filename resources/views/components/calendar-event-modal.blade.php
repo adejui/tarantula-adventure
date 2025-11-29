@@ -769,7 +769,7 @@
         });
     </script>
 
-    <div class="p-0 grid grid-cols-5">
+    <div class="p-0 grid sm:grid-cols-5">
 
         <div class="col-span-3">
             <div id="calendar" class="bg-white dark:bg-gray-900 p-0 rounded-xl shadow"></div>
