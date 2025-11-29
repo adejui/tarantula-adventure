@@ -11,7 +11,7 @@ class PublicActivityController extends Controller
     public function index()
     {
 
-        // $activities = Activity::orderBy('start_date', 'asc')->paginate(5);
-        return view('frontend.activities.index', compact('activities'));
+        // $activities = Activity::orderBy('start_date', 'asc')->paginate(5); compact('activities')
+        return view('frontend.activities.index');
     }
 }

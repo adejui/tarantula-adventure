@@ -44,7 +44,7 @@
                         </button>
                     </div>
 
-                    <div id="calendar"
+                    <div id="kalender"
                         class="grid grid-cols-7 text-center text-sm md:text-base border border-gray-200 rounded-2xl overflow-hidden shadow-sm bg-white">
                     </div>
                 </div>
@@ -101,12 +101,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const calendar = document.getElementById("calendar");
+            const kalender = document.getElementById("kalender");
             const monthTitle = document.getElementById("monthTitle");
             let date = new Date();
 
-            function renderCalendar() {
-                calendar.innerHTML = "";
+            function renderKalender() {
+                kalender.innerHTML = "";
 
                 const year = date.getFullYear();
                 const month = date.getMonth();
@@ -126,7 +126,7 @@
 
                 // Render header
                 days.forEach(day => {
-                    calendar.innerHTML += `
+                    kalender.innerHTML += `
             <div class='py-3 bg-gray-50 text-gray-400 font-semibold text-xs uppercase tracking-wider border'>
                 ${day}
             </div>`;
@@ -138,7 +138,7 @@
                 // Render previous month
                 for (let i = 0; i < firstDay; i++) {
                     const dayNum = prevMonthDays - firstDay + 1 + i;
-                    calendar.innerHTML += `
+                    kalender.innerHTML += `
             <div class='h-20 border bg-gray-50/50 p-2 text-gray-300'>
                 ${dayNum}
             </div>`;
@@ -153,7 +153,7 @@
                         month === today.getMonth() &&
                         year === today.getFullYear();
 
-                    calendar.innerHTML += `
+                    kalender.innerHTML += `
             <div class="h-20 border p-2 ${isToday ? 'bg-purple-50 text-purple-600 font-bold' : 'bg-white text-gray-700'}">
                 ${d}
             </div>`;
@@ -162,22 +162,22 @@
 
                 // Render next month (agar total cell divisible by 7)
                 while (cellCount % 7 !== 0) {
-                    calendar.innerHTML += `
+                    kalender.innerHTML += `
             <div class='h-20 border bg-gray-50/50 text-gray-300 p-2'></div>`;
                     cellCount++;
                 }
             }
 
-            renderCalendar();
+            renderKalender();
 
             document.getElementById("prevMonth").addEventListener("click", () => {
                 date.setMonth(date.getMonth() - 1);
-                renderCalendar();
+                renderKalender();
             });
 
             document.getElementById("nextMonth").addEventListener("click", () => {
                 date.setMonth(date.getMonth() + 1);
-                renderCalendar();
+                renderKalender();
             });
         });
     </script>

@@ -59,7 +59,7 @@
             </div>
 
             <div class="flex-shrink-0">
-                <a href="#jadwal"
+                <a href="{{ route('frontend.kegiatan') }}"
                     class="bg-[#7753AF] hover:bg-[#5e3d8e] text-white font-medium px-6 py-3 rounded-xl transition shadow-md whitespace-nowrap">
                     Lihat Semua
                 </a>
@@ -100,8 +100,8 @@
                             @foreach ($activity->members->take(3) as $member)
                                 <div class="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200"
                                     title="{{ $member->full_name }}">
-                                    <img src="{{ $member->photo ? asset('storage/' . $member->photo) : 'https://ui-avatars.com/api/?name=' . urlencode($member->full_name) . '&background=random&color=fff' }}"
-                                        alt="{{ $member->full_name }}" class="w-full h-full object-cover">
+                                    <img src="{{ $member->photo ? asset('storage/' . $member->photo) : asset('frontend/images/user-default.jpeg') }}"
+                                        alt="{{ $member->name }}" class="w-full h-full object-cover rounded-full border-2 border-gray">
                                 </div>
                             @endforeach
 
