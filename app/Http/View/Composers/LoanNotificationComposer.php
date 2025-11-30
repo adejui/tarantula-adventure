@@ -11,7 +11,7 @@ class LoanNotificationComposer
     {
         $view->with(
             'notifLoans',
-            Loan::where('status', 'requested')->get()
+            Loan::where('status', 'requested')->orderBy('created_at', 'desc')->get()
         );
     }
 }

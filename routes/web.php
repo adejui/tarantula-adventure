@@ -23,16 +23,39 @@ use App\Http\Controllers\Dashboard\ActivityDocumentController;
 use App\Http\Controllers\Frontend\PublicLoanController;
 
 // --- FRONTEND ---
+// Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
 Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
-    Route::get('/inventory/{id}', [InventoryController::class, 'show'])->name('inventory.show'); 
+    Route::get('/inventory/{id}', [InventoryController::class, 'show'])->name('inventory.show');
 
     Route::get('/kegiatan', [PublicActivityController::class, 'index'])->name('kegiatan');
 
-    Route::get('/pinjaman', [PublicLoanController::class, 'create'])->name('pinjaman');
+    // Route::get('/pinjaman', [PublicLoanController::class, 'create'])->name('pinjaman');
 
+
+
+
+    Route::post('/inventory/cart/add/{id}', [InventoryController::class, 'addToCart'])->name('inventory.cart.add');
+
+
+    Route::post('/inventory/cart/update-qty', [InventoryController::class, 'updateQty'])
+        ->name('inventory.cart.updateQty');
+
+
+    Route::post('/inventory/cart/update/{id}', [InventoryController::class, 'updateCart'])->name('inventory.cart.update');
+    Route::post('/inventory/cart/remove/{id}', [InventoryController::class, 'removeFromCart'])->name('inventory.cart.remove');
+
+
+    // Route::get('/pinjaman', [InventoryController::class, 'pinjaman'])
+    //     ->name('frontend.pinjaman');
+
+    Route::get('/pinjaman', [PublicLoanController::class, 'pinjamanForm'])->name('pinjaman');
+
+
+    Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])
+        ->name('pinjaman.store');
 });
 
 

@@ -82,12 +82,12 @@
 
                             <div class="flex items-center gap-2">
 
-                                <button onclick="addToCart({{ $item->id }})"
-                                    class="w-10 h-10 rounded-xl border-2 border-[#7C3AED] text-[#7C3AED] flex items-center justify-center hover:bg-[#7C3AED] hover:text-white transition-all duration-300 shadow-sm">
-                                    <i class="fa-solid fa-plus text-sm"></i>
+                                <button
+                                    class="w-10 h-10 rounded-xl border-2 border-[#7C3AED] text-[#7C3AED] flex items-center justify-center hover:bg-[#7C3AED] hover:text-white transition-all duration-300 shadow-sm group/cart"
+                                    title="Tambah ke Keranjang">
+                                    <i
+                                        class="fa-solid fa-plus text-sm group-hover/cart:rotate-90 transition-transform duration-300"></i>
                                 </button>
-
-
 
                                 <a href="{{ route('frontend.inventory.show', $item->id) }}"
                                     class="w-10 h-10 bg-[#7753AF] rounded-xl flex items-center justify-center text-white hover:bg-[#5e3d8e] hover:scale-110 transition-all duration-300 shadow-md group/btn"
@@ -112,6 +112,7 @@
                         <p class="text-gray-500 text-sm">Inventaris saat ini masih kosong.</p>
                     </div>
                 @endforelse
+
             </div>
 
             <div class="mt-12">
@@ -127,100 +128,122 @@
 
             <span
                 class="absolute top-0 right-0 w-6 h-6 bg-red-500 border-2 border-white rounded-full text-[10px] font-bold flex items-center justify-center">
-                {{ count(session('cart', [])) }}
+                3
             </span>
-
         </button>
     </div>
-    <div id="cart-drawer" class="fixed inset-0 z-50 hidden" aria-modal="true">
+    <div id="cart-drawer" class="fixed inset-0 z-50 hidden" aria-labelledby="slide-over-title" role="dialog"
+        aria-modal="true">
 
-        <!-- Overlay -->
         <div class="absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity opacity-0 cart-overlay"
             onclick="toggleCart()"></div>
 
-        <!-- Drawer Wrapper -->
         <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
 
-            <!-- Drawer Panel -->
             <div id="cart-panel"
-                class="pointer-events-auto w-screen max-w-md transform transition-all duration-500 ease-in-out translate-x-full bg-white shadow-2xl flex flex-col h-full">
+                class="pointer-events-auto w-screen max-w-md transform transition ease-in-out duration-500 translate-x-full bg-white shadow-2xl flex flex-col h-full">
 
-                <!-- HEADER -->
                 <div class="flex items-start justify-between px-6 py-6 border-b border-gray-100">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900">Keranjang Alat</h2>
-                        <p class="text-sm text-gray-500 mt-1">
-                            {{ count(session('cart', [])) }} Barang dipilih
-                        </p>
+                        <h2 class="text-xl font-bold text-gray-900" id="slide-over-title">Keranjang Alat</h2>
+                        <p class="text-sm text-gray-500 mt-1">3 Barang dipilih</p>
                     </div>
-                    <button type="button" class="text-gray-400 hover:text-gray-500" onclick="toggleCart()">
+                    <button type="button" class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                        onclick="toggleCart()">
+                        <span class="sr-only">Close panel</span>
                         <i class="fa-solid fa-xmark text-2xl"></i>
                     </button>
                 </div>
 
-                <!-- CART ITEMS -->
-                <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6" id="cart-items">
-                    @foreach (session('cart', []) as $cart)
-                        <div class="flex gap-4">
-                            <div class="h-20 w-20 shrink-0 rounded-xl border border-gray-200 bg-gray-50 overflow-hidden">
-                                <img src="{{ $cart['photo'] ? asset('storage/' . $cart['photo']) : asset('frontend/images/tas.jpg') }}"
-                                    class="h-full w-full object-contain p-2 mix-blend-multiply">
+                <div class="flex-1 overflow-y-auto px-6 py-6 space-y-6">
+
+                    <div class="flex gap-4">
+                        <div class="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                            <img src="{{ asset('frontend/images/tas.jpg') }}"
+                                class="h-full w-full object-contain object-center p-2 mix-blend-multiply">
+                        </div>
+
+                        <div class="flex flex-1 flex-col">
+                            <div>
+                                <div class="flex justify-between text-base font-medium text-gray-900">
+                                    <h3><a href="#">Mountain Backpack 60L</a></h3>
+                                    <p class="ml-4 text-[#7C3AED] font-bold">#A01</p>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">Kategori: Tas</p>
                             </div>
 
-                            <div class="flex flex-1 flex-col">
-                                <div>
-                                    <div class="flex justify-between text-base font-semibold text-gray-900">
-                                        <h3>{{ $cart['name'] }}</h3>
-                                        <p class="ml-4 text-[#7C3AED] font-bold">#{{ $cart['code'] }}</p>
-                                    </div>
-                                    <p class="mt-1 text-sm text-gray-500">Kategori: {{ $cart['category'] }}</p>
+                            <div class="flex flex-1 items-end justify-between text-sm">
+
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button
+                                        class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-r border-gray-300">-</button>
+                                    <span class="px-3 py-1 font-medium text-gray-900">1</span>
+                                    <button
+                                        class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-l border-gray-300">+</button>
                                 </div>
 
-                                <div class="flex flex-1 items-end justify-between text-sm mt-2">
-
-                                    <!-- QTY CONTROL -->
-                                    <div class="flex items-center border border-gray-300 rounded-lg">
-                                        <button onclick="updateQty({{ $cart['id'] }}, {{ $cart['qty'] - 1 }})"
-                                            class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-r border-gray-300">-</button>
-
-                                        <span class="px-3 py-1 font-medium text-gray-900">{{ $cart['qty'] }}</span>
-
-                                        <button onclick="updateQty({{ $cart['id'] }}, {{ $cart['qty'] + 1 }})"
-                                            class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-l border-gray-300">+</button>
-                                    </div>
-
-                                    <!-- REMOVE -->
-                                    <button onclick="removeItem({{ $cart['id'] }})"
-                                        class="font-medium text-red-500 hover:text-red-700 flex items-center gap-1">
-                                        <i class="fa-regular fa-trash-can"></i> Hapus
-                                    </button>
-                                </div>
+                                <button type="button"
+                                    class="font-medium text-red-500 hover:text-red-700 flex items-center gap-1 transition-colors">
+                                    <i class="fa-regular fa-trash-can"></i> Hapus
+                                </button>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-
-                <!-- FOOTER -->
-                <div class="border-t border-gray-100 px-6 py-6 bg-gray-50">
-                    <div class="flex justify-between text-base font-semibold text-gray-900 mb-4">
-
-                        <p>Total Barang</p>
-                        <p><span id="cart-total">{{ collect(session('cart', []))->sum('qty') }}</span> Unit</p>
-
                     </div>
 
-                    <p class="text-sm text-gray-500 mb-6">Pastikan barang sudah sesuai sebelum mengajukan peminjaman.</p>
+                    {{-- <div class="flex gap-4">
+                        <div class="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
+                            <img src="{{ asset('frontend/images/tas2.jpg') }}"
+                                class="h-full w-full object-contain object-center p-2 mix-blend-multiply">
+                        </div>
+                        <div class="flex flex-1 flex-col">
+                            <div>
+                                <div class="flex justify-between text-base font-medium text-gray-900">
+                                    <h3><a href="#">Tenda Dome 4P</a></h3>
+                                    <p class="ml-4 text-[#7C3AED] font-bold">#T05</p>
+                                </div>
+                                <p class="mt-1 text-sm text-gray-500">Kategori: Tenda</p>
+                            </div>
+                            <div class="flex flex-1 items-end justify-between text-sm">
+                                <div class="flex items-center border border-gray-300 rounded-lg">
+                                    <button
+                                        class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-r border-gray-300">-</button>
+                                    <span class="px-3 py-1 font-medium text-gray-900">2</span>
+                                    <button
+                                        class="px-3 py-1 text-gray-600 hover:bg-gray-100 border-l border-gray-300">+</button>
+                                </div>
+                                <button type="button"
+                                    class="font-medium text-red-500 hover:text-red-700 flex items-center gap-1 transition-colors">
+                                    <i class="fa-regular fa-trash-can"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div> --}}
 
-                    <a href="{{ route('frontend.pinjaman') }}"
-                        class="flex items-center justify-center rounded-xl bg-[#7C3AED] px-6 py-4 text-base font-bold text-white shadow-lg hover:bg-[#6D28D9] transition-all">
-                        Lanjut Isi Formulir <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
+                </div>
 
-
-                    <div class="mt-6 text-center text-sm text-gray-500">
-                        atau
-                        <button type="button" class="font-medium text-[#7C3AED]" onclick="toggleCart()">Lanjut Cari Barang
-                            →</button>
+                <div class="border-t border-gray-100 px-6 py-6 bg-gray-50">
+                    <div class="flex justify-between text-base font-medium text-gray-900 mb-4">
+                        <p>Total Barang</p>
+                        <p>3 Unit</p>
+                    </div>
+                    <p class="mt-0.5 text-sm text-gray-500 mb-6">
+                        Pastikan barang yang dipilih sudah sesuai sebelum mengajukan peminjaman.
+                    </p>
+                    <div class="mt-6">
+                        <a href="{{ route('frontend.pinjaman') }}"
+                            class="flex items-center justify-center rounded-xl border border-transparent bg-[#7C3AED] px-6 py-4 text-base font-bold text-white shadow-lg hover:bg-[#6D28D9] hover:shadow-purple-500/30 transition-all">
+                            Lanjut Isi Formulir <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                        <p>
+                            atau
+                            <button type="button" class="font-medium text-[#7C3AED] hover:text-[#6D28D9]"
+                                onclick="toggleCart()">
+                                Lanjut Cari Barang
+                                <span aria-hidden="true"> &rarr;</span>
+                            </button>
+                        </p>
                     </div>
                 </div>
 
@@ -228,94 +251,30 @@
         </div>
     </div>
 
-
     <script>
         function toggleCart() {
-            const drawer = document.getElementById("cart-drawer");
-            const panel = document.getElementById("cart-panel");
-            const overlay = document.querySelector(".cart-overlay");
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-panel');
+            const overlay = document.querySelector('.cart-overlay');
 
-            if (drawer.classList.contains("hidden")) {
-                drawer.classList.remove("hidden");
-
+            if (drawer.classList.contains('hidden')) {
+                // BUKA DRAWER
+                drawer.classList.remove('hidden');
+                // Sedikit delay biar transisi CSS jalan
                 setTimeout(() => {
-                    overlay.classList.remove("opacity-0");
-                    panel.classList.remove("translate-x-full");
+                    overlay.classList.remove('opacity-0');
+                    panel.classList.remove('translate-x-full');
                 }, 10);
-
             } else {
-                overlay.classList.add("opacity-0");
-                panel.classList.add("translate-x-full");
+                // TUTUP DRAWER
+                overlay.classList.add('opacity-0');
+                panel.classList.add('translate-x-full');
 
+                // Tunggu animasi selesai baru hide elemennya
                 setTimeout(() => {
-                    drawer.classList.add("hidden");
+                    drawer.classList.add('hidden');
                 }, 500);
             }
-        }
-
-        function reloadCart() {
-            fetch("{{ route('frontend.inventory') }}?cart=1")
-
-                .then(res => res.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, "text/html");
-
-                    // ambil ulang cart-items
-                    document.getElementById("cart-items").innerHTML =
-                        doc.querySelector("#cart-items").innerHTML;
-                });
-        }
-
-        function addToCart(id) {
-            fetch("/inventory/cart/add/" + id, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    }
-                })
-                .then(res => res.json())
-                .then(data => {
-                    reloadCart();
-                    toggleCart();
-
-                    if (data.total !== undefined) {
-                        document.getElementById("cart-total").innerText = data.total;
-                    }
-                });
-        }
-
-        function updateQty(id, qty) {
-            fetch("/inventory/cart/update-qty", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        id,
-                        qty
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    reloadCart();
-
-                    // Update footer total
-                    if (data.total !== undefined) {
-                        document.getElementById("cart-total").innerText = data.total;
-                    }
-                });
-        }
-
-
-        function removeItem(id) {
-            fetch("/inventory/cart/remove/" + id, {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                }
-            }).then(() => reloadCart());
         }
     </script>
 @endsection
