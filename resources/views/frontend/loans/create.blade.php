@@ -7,7 +7,17 @@
         @endif
     </div>
     @if (session('error'))
-        <x-alert-error title="Berhasil!" :message="session('error')" />
+        <div class="mb-5 flex justify-end">
+            <x-alert-error title="Gagal!" :message="session('error')" />
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 max-w-7xl mx-auto"
+            role="alert">
+            <strong class="font-bold">Ada kesalahan input!</strong>
+            <span class="block sm:inline">Silakan periksa kembali formulir di bawah ini.</span>
+        </div>
     @endif
 
     <div class="bg-gray-50 min-h-screen pt-32 pb-20 px-6 md:px-16">
@@ -29,9 +39,8 @@
                 </nav>
             </div>
 
-            <form action="{{ route('frontend.pinjaman.store') }}" method="POST">
+            <form action="{{ route('frontend.pinjaman.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
                 <input type="hidden" name="cart_items" id="cart_items_input" value="{{ json_encode($cartItems) }}">
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -42,53 +51,73 @@
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Data Peminjam</h3>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                                 <div class="md:col-span-2">
                                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Nama
-                                        Lengkap</label>
-                                    <input type="text" name="name"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
+                                        Lengkap <span class="text-red-500">*</span></label>
+                                    <input type="text" name="name" value="{{ old('name') }}"
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('name') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="Masukkan nama lengkap sesuai KTP...">
+
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Kampus
-                                        Asal</label>
-                                    <input type="text" name="campus_name"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
+                                        Asal <span class="text-red-500">*</span></label>
+                                    <input type="text" name="campus_name" value="{{ old('campus_name') }}"
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('campus_name') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="Contoh: UBSI Yogyakarta">
+
+                                    @error('campus_name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label
-                                        class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Organisasi</label>
-                                    <input type="text" name="organization_name"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
+                                        class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Organisasi
+                                        <span class="text-red-500">*</span></label>
+                                    <input type="text" name="organization_name" value="{{ old('organization_name') }}"
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('organization_name') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="Mapala / UKM / Umum">
+
+                                    @error('organization_name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">No
-                                        WhatsApp</label>
-                                    <input type="number" name="phone_number"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
+                                        WhatsApp <span class="text-red-500">*</span></label>
+                                    <input type="number" name="phone_number" value="{{ old('phone_number') }}"
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('phone_number') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="08xxxxxxxxxx">
+
+                                    @error('phone_number')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
-                                    <label
-                                        class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Email</label>
-                                    <input type="email" name="email"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
+                                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Email
+                                        <span class="text-red-500">*</span></label>
+                                    <input type="email" name="email" value="{{ old('email') }}"
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('email') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="email@domain.com">
+
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
-                                <div class="md:col-span-2">
-                                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Alamat
-                                        Lengkap</label>
-                                    <textarea rows="3"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
-                                        placeholder="Masukkan alamat lengkap domisili saat ini..."></textarea>
-                                </div>
                             </div>
                         </div>
 
@@ -96,34 +125,49 @@
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Informasi Peminjaman</h3>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                                 <div>
                                     <label
                                         class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Tanggal
-                                        Pinjam</label>
+                                        Pinjam <span class="text-red-500">*</span></label>
                                     <div class="relative">
-                                        <input type="date" name="borrow_date"
-                                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase">
+                                        <input type="date" name="borrow_date" value="{{ old('borrow_date') }}"
+                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase
+                                            @error('borrow_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror">
                                     </div>
+                                    @error('borrow_date')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div>
                                     <label
                                         class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Tanggal
-                                        Pengembalian</label>
+                                        Pengembalian <span class="text-red-500">*</span></label>
                                     <div class="relative">
-                                        <input type="date" name="return_date"
-                                            class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase">
+                                        <input type="date" name="return_date" value="{{ old('return_date') }}"
+                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase
+                                            @error('return_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror">
                                     </div>
+                                    @error('return_date')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="md:col-span-2">
                                     <label
                                         class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Keperluan
-                                        Peminjaman</label>
+                                        Peminjaman <span class="text-red-500">*</span></label>
                                     <textarea rows="4" name="notes"
-                                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400"
-                                        placeholder="Jelaskan keperluan peminjaman secara detail (Contoh: Pendakian Masal Angkatan 2024 ke Gunung Merbabu)..."></textarea>
+                                        class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
+                                        @error('notes') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
+                                        placeholder="Jelaskan keperluan peminjaman secara detail...">{{ old('notes') }}</textarea>
+
+                                    @error('notes')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
+
                             </div>
                         </div>
 
@@ -134,8 +178,7 @@
                             <h3 class="text-lg font-bold text-gray-900 mb-6">Ringkasan Peminjaman</h3>
 
                             <div class="space-y-4 mb-8 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-
-                                @foreach ($cartItems as $item)
+                                @forelse ($cartItems as $item)
                                     <div
                                         class="flex gap-4 p-3 border border-gray-100 rounded-2xl bg-white hover:border-purple-100 transition-colors group">
                                         <div
@@ -156,14 +199,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="text-center py-4 text-gray-400 text-sm">Keranjang kosong.</div>
+                                @endforelse
                             </div>
 
                             <button type="submit"
                                 class="w-full py-4 bg-[#7753AF] hover:bg-[#5e3d8e] text-white font-bold rounded-xl shadow-lg shadow-purple-200 transition-all transform hover:-translate-y-1 active:scale-95">
                                 Ajukan Peminjaman
                             </button>
-
                         </div>
                     </div>
 
