@@ -295,7 +295,7 @@
                     <!-- Menu Item Peminjaman -->
                     <li x-data="{
                         selected: '',
-                        isActive: {{ in_array(Route::currentRouteName(), ['loans.index', 'opas.index', 'loan-details.index', 'loans.manage', 'loans.show']) ? 'true' : 'false' }}
+                        isActive: {{ in_array(Route::currentRouteName(), ['loans.index', 'opas.index', 'loan-details.index', 'loans.manage', 'loans.show', 'notifications.show']) ? 'true' : 'false' }}
                     }">
                         <a href="#" @click.prevent="selected = (selected === 'Peminjaman' ? '' : 'Peminjaman')"
                             class="menu-item font-normal group rounded-lg py-3.5 flex items-center relative"
@@ -311,6 +311,7 @@
                                     'loan-details.index',
                                     'loans.manage',
                                     'loans.show',
+                                    'notifications.show',
                                 ]))
                                 {{-- Aktif --}}
                                 <img src="{{ asset('assets/images/icons/notepad-text-dark.svg') }}"
@@ -364,7 +365,7 @@
                                 <li>
                                     <a href="{{ route('loans.index') }}"
                                         class="menu-dropdown-item group font-normal py-3.5
-                        {{ in_array(Route::currentRouteName(), ['loans.index', 'loans.manage', 'loans.show'])
+                        {{ in_array(Route::currentRouteName(), ['loans.index', 'loans.manage', 'loans.show', 'notifications.show'])
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
                                         Daftar Peminjaman

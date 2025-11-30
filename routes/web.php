@@ -32,6 +32,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 // --- BACKEND ---
+
+Route::get('/users/{user}/edit-profile', [UserController::class, 'editProfile'])
+    ->name('users.editProfile');
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -57,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
 
     Route::resource('loans', LoanController::class);
+    Route::get('/notifications/{loan}', [LoanController::class, 'showNotification'])->name('notifications.show');
     Route::get('/loans/manage/{loan}', [LoanController::class, 'manage'])->name('loans.manage');
     Route::post('loans/{loan}/accept', [LoanController::class, 'accept'])->name('loans.accept');
     Route::post('loans/{loan}/reject', [LoanController::class, 'reject'])->name('loans.reject');

@@ -61,7 +61,7 @@ class LoanController extends Controller
 
         $loan->update(['status' => 'approved']);
 
-        return redirect()->back()->with('success', ' Berhasil diACC.');
+        return redirect()->route('loans.index')->with('success', ' Berhasil diACC.');
     }
 
     public function reject($loan)
@@ -177,6 +177,11 @@ class LoanController extends Controller
     public function edit(string $id)
     {
         //
+    }
+
+    public function showNotification(Loan $loan)
+    {
+        return view('dashboard.loans.notifikasiShow', compact('loan'));
     }
 
     /**

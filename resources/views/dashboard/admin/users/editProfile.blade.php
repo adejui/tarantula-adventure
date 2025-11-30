@@ -52,16 +52,6 @@
                     </form>
                 </div>
 
-                {{-- <div class="flex flex-inline w-full gap-x-3 items-center justify-center">
-                    <a href="{{ route('users.edit', $user->id) }}" title="Edit"
-                        class="p-2.5 mt-6 border-2 border-[#7753AF] dark:border-gray-700 bg-[#7753AF] w-full rounded-xl dark:text-white focus:outline-none cursor-pointer flex items-center justify-center">
-                        <span class="text-sm text-white">Ganti</span>
-                    </a>
-                    <a href="{{ route('users.edit', $user->id) }}" title="Edit"
-                        class="p-2.5 mt-6 border-2 border-[#7753AF] dark:border-gray-700 bg-transparent w-full rounded-xl dark:text-white focus:outline-none cursor-pointer flex items-center justify-center">
-                        <span class="text-sm text-[#7753AF]">Hapus</span>
-                    </a>
-                </div> --}}
             </div>
 
             <!-- INFORMASI -->
@@ -69,6 +59,10 @@
                 <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('put')
+                    <input type="hidden" name="role" value="{{ old('role', $user->role) }}">
+                    <input type="hidden" name="status" value="{{ old('status', $user->status) }}">
+                    <input type="hidden" name="position" value="{{ old('position', $user->position) }}">
+
 
                     <!-- INFORMASI PRIBADI -->
                     <div class="p-4 border border-[#E0E0E0] mb-3 rounded-xl dark:border-gray-700 dark:bg-white/5">
@@ -231,9 +225,9 @@
                                     Angkatan
                                 </label>
 
-                                <input type="text" name="generation"
+                                <input type="text" name="generation" readonly
                                     value="{{ old('generation', $user->generation) }}" placeholder="Masukan nama lengkap"
-                                    class="text-[#212121] font-normal text-xs dark:text-white/90 h-11 w-full rounded-lg border px-4 py-2.5 pr-10 text-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:placeholder:text-white/30 focus:border-brand-300 focus:ring-brand-500/10 @error('generation') border-error-500 focus:border-error-500 focus:ring-error-500/10 dark:border-error-500 dark:focus:border-error-500 @else border-gray-300 dark:border-gray-700 dark:focus:border-brand-800 @enderror" />
+                                    class="text-[#212121] font-normal bg-gray-100 text-xs dark:text-white/90 h-11 w-full rounded-lg border px-4 py-2.5 pr-10 text-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:placeholder:text-white/30 focus:border-brand-300 focus:ring-brand-500/10 @error('generation') border-error-500 focus:border-error-500 focus:ring-error-500/10 dark:border-error-500 dark:focus:border-error-500 @else border-gray-300 dark:border-gray-700 dark:focus:border-brand-800 @enderror" />
                                 @error('generation')
                                     <span class="absolute top-1/2 right-3.5 -translate-y-1/2">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -254,9 +248,9 @@
                                     Tahun
                                 </label>
 
-                                <input type="text" name="batch" value="{{ old('batch', $user->batch) }}"
+                                <input type="text" name="batch" value="{{ old('batch', $user->batch) }}" readonly
                                     placeholder="Masukan nama lengkap"
-                                    class="text-[#212121] font-normal text-xs dark:text-white/90 h-11 w-full rounded-lg border px-4 py-2.5 pr-10 text-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:placeholder:text-white/30 focus:border-brand-300 focus:ring-brand-500/10 @error('batch') border-error-500 focus:border-error-500 focus:ring-error-500/10 dark:border-error-500 dark:focus:border-error-500 @else border-gray-300 dark:border-gray-700 dark:focus:border-brand-800 @enderror" />
+                                    class="text-[#212121] font-normal bg-gray-100 text-xs dark:text-white/90 h-11 w-full rounded-lg border px-4 py-2.5 pr-10 text-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:placeholder:text-white/30 focus:border-brand-300 focus:ring-brand-500/10 @error('batch') border-error-500 focus:border-error-500 focus:ring-error-500/10 dark:border-error-500 dark:focus:border-error-500 @else border-gray-300 dark:border-gray-700 dark:focus:border-brand-800 @enderror" />
                                 @error('batch')
                                     <span class="absolute top-1/2 right-3.5 -translate-y-1/2">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -329,138 +323,7 @@
                     <!-- INFORMASI AKUN -->
                     <div class="p-4 border border-[#E0E0E0] mb-3 rounded-xl dark:border-gray-700 dark:bg-white/5">
                         <h3 class="font-semibold text-md text-[#212121] dark:text-white/90">Informasi Akun</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mt-5">
-
-                            <div>
-                                <label
-                                    class="text-[#616161] font-medium text-xs mb-2 block text-md text-md dark:text-gray-400">
-                                    Role
-                                </label>
-                                <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
-                                    <select name="role"
-                                        class="text-[#212121] font-normal text-xs dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full appearance-none rounded-lg border bg-none px-4 py-3 pr-11 ttext-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 @error('role') border-error-500 dark:border-error-500 @else border-gray-300 dark:border-gray-700 @enderror"
-                                        :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
-                                        @change="isOptionSelected = true">
-                                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Admin
-                                        </option>
-                                        <option value="logistics"
-                                            {{ old('role', $user->role) == 'logistics' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Logistik
-                                        </option>
-                                        <option value="member"
-                                            {{ old('role', $user->role) == 'member' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Anggota
-                                        </option>
-                                    </select>
-
-                                    <span
-                                        class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                                        <svg class="stroke-current" width="20" height="20" viewBox="0 0 20 20"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                </div>
-
-                                @error('role')
-                                    <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label
-                                    class="text-[#616161] font-medium text-xs mb-2 block text-md text-md dark:text-gray-400">
-                                    Status
-                                </label>
-                                <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
-                                    <select name="status"
-                                        class="text-[#212121] font-normal text-xs dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full appearance-none rounded-lg border bg-none px-4 py-3 pr-11 ttext-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 @error('status') border-error-500 dark:border-error-500 @else border-gray-300 dark:border-gray-700 @enderror"
-                                        :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
-                                        @change="isOptionSelected = true">
-                                        <option value="active"
-                                            {{ old('status', $user->status) == 'active' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Aktif
-                                        </option>
-                                        <option value="inactive"
-                                            {{ old('status', $user->status) == 'inactive' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Tidak Aktif
-                                        </option>
-                                        <option value="alumni"
-                                            {{ old('status', $user->status) == 'alumni' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Alumni
-                                        </option>
-                                    </select>
-
-                                    <span
-                                        class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                                        <svg class="stroke-current" width="20" height="20" viewBox="0 0 20 20"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                </div>
-
-                                @error('status')
-                                    <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label
-                                    class="text-[#616161] font-medium text-xs mb-2 block text-md text-md dark:text-gray-400">
-                                    Jabatan
-                                </label>
-                                <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
-                                    <select name="position"
-                                        class="text-[#212121] font-normal text-xs dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 w-full appearance-none rounded-lg border bg-none px-4 py-3 pr-11 ttext-md placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 @error('position') border-error-500 dark:border-error-500 @else border-gray-300 dark:border-gray-700 @enderror"
-                                        :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
-                                        @change="isOptionSelected = true">
-                                        <option value="leader"
-                                            {{ old('position', $user->position) == 'leader' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Ketua
-                                        </option>
-                                        <option value="secretary"
-                                            {{ old('position', $user->position) == 'secretary' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Sekretaris
-                                        </option>
-                                        <option value="logistics"
-                                            {{ old('position', $user->position) == 'logistics' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Logistik
-                                        </option>
-                                        <option value="member"
-                                            {{ old('position', $user->position) == 'member' ? 'selected' : '' }}
-                                            class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
-                                            Anggota
-                                        </option>
-                                    </select>
-
-                                    <span
-                                        class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
-                                        <svg class="stroke-current" width="20" height="20" viewBox="0 0 20 20"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396" stroke-width="1.5"
-                                                stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </span>
-                                </div>
-
-                                @error('position')
-                                    <p class="mt-1 text-sm text-red-500 dark:text-red-400">{{ $message }}</p>
-                                @enderror
-                            </div>
-
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
 
                             <div>
                                 <label

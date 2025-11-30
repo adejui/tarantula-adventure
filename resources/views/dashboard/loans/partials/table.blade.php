@@ -3,7 +3,7 @@
     <thead>
         <tr class="border-b border-gray-100 text-[#616161] dark:border-gray-800">
             <th class="py-3 text-left">
-                <div class="flex items-center">
+                <div class="flex items-center sm:ms-12">
                     <p class="font-medium text-theme-md dark:text-gray-400">
                         Nama
                     </p>
@@ -52,7 +52,27 @@
                 <td class="py-3">
                     <div class="flex items-center">
                         <div class="flex items-center gap-3">
-                            <div>
+                            <!-- FOTO -->
+                            <span class="relative z-1 block h-10 w-10 rounded-full shrink-0">
+                                @if ($loan->user_id)
+                                    <img src="{{ $loan->user && $loan->user->photo
+                                        ? asset('storage/' . $loan->user->photo)
+                                        : asset('storage/imgUsers/default-image.png') }}"
+                                        alt="Foto User" class="h-full w-full object-cover rounded-full">
+                                @else
+                                    <img src="{{ asset('storage/imgUsers/default-image.png') }}" alt="Foto OPA"
+                                        class="h-full w-full object-cover rounded-full">
+                                @endif
+
+                                @if ($loan->status === 'requested')
+                                    <span
+                                        class="bg-success-500 absolute right-0 bottom-0 z-10 h-2.5 w-2.5 rounded-full border-[1.5px] border-white dark:border-gray-900">
+                                    </span>
+                                @endif
+                            </span>
+
+                            <!-- NAMA + NRP -->
+                            <div class="flex flex-col">
                                 <p class="font-medium text-[#2E2E2E] text-theme-sm dark:text-white/90">
                                     @if (!empty($loan->user_id))
                                         {{ $loan->user->full_name }}
@@ -65,6 +85,7 @@
                                 </span>
                             </div>
                         </div>
+
                     </div>
                 </td>
                 <td class="py-3 hidden lg:table-cell">
@@ -102,8 +123,8 @@
                                 <x-action-button type="detail" :url="route('loans.show', $loan->id)" title="Detail" />
                                 <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
                             @elseif ($loan->status === 'borrowed')
-                                <x-loan-action type="borrowed" id="borrowed-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
-                                    :action="route('loans.borrowed', $loan->id)" />
+                                <x-loan-action type="borrowed" id="borrowed-loan-{{ $loan->id }}"
+                                    :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name" :action="route('loans.borrowed', $loan->id)" />
                                 <x-action-button type="detail" :url="route('loans.show', $loan->id)" title="Detail" />
                                 <x-action-button type="manage" :url="route('loans.manage', $loan->id)" title="loan" />
                             @else

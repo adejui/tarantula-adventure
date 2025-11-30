@@ -12,7 +12,9 @@
         <h3 class="font-bold text-2xl text-gray-800 dark:text-white/90 mb-6">Detail Peminjaman</h3>
 
         <div class="grid sm:grid-cols-2 gap-4">
-            <div class="rounded-2xl mb-4 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 sm:p-6">
+            <div
+                class="rounded-2xl mb-4 border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/3 sm:p-6 items-start h-fit">
+
                 <div class="mb-9 flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">
                         Informasi Peminjaman
@@ -22,11 +24,7 @@
                 <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
                     <p class="text-theme-xs text-gray-500 dark:text-gray-400">Nama Peminjam</p>
                     <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
-                        @if (!empty($loan->user_id))
-                            {{ $loan->user->full_name }}
-                        @else
-                            {{ $loan->opa->name }}
-                        @endif
+                        {{ $loan->user_id ? $loan->user->full_name : $loan->opa->name }}
                     </p>
                 </div>
 
@@ -37,13 +35,14 @@
                     </p>
                 </div>
 
-                <div class="flex flex-raw gap-20 mb-5">
+                <div class="flex flex-row gap-20 mb-5">
                     <div class="flex flex-col gap-y-1 w-fit justify-center">
                         <p class="text-theme-xs text-gray-500 dark:text-gray-400">Tanggal Pinjam</p>
                         <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
                             {{ \Carbon\Carbon::parse($loan->borrow_date)->translatedFormat('d F Y') }}
                         </p>
                     </div>
+
                     <div class="flex flex-col gap-y-1 w-fit justify-center">
                         <p class="text-theme-xs text-gray-500 dark:text-gray-400">Tanggal Kembali</p>
                         <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
@@ -62,8 +61,15 @@
                 <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
                     <p class="text-theme-xs text-gray-500 dark:text-gray-400">Catatan</p>
                     <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
-                        {{ $loan->notes }}
+                        {{ $loan->notes ?? '-' }}
                     </p>
+                </div>
+
+                <div class="flex justify-end gap-3">
+                    <x-loan-action type="acc" id="acc-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name" :action="route('loans.accept', $loan->id)" />
+
+                    <x-loan-action type="reject" id="reject-loan-{{ $loan->id }}" :item="$loan->user_id ? $loan->user->full_name : $loan->opa->name"
+                        :action="route('loans.reject', $loan->id)" />
                 </div>
             </div>
 
