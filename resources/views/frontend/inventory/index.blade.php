@@ -89,12 +89,14 @@
                                         class="fa-solid fa-plus text-sm group-hover/cart:rotate-90 transition-transform duration-300"></i>
                                 </button>
 
-                                <button
+                                <a href="{{ route('frontend.inventory.show', $item->id) }}"
                                     class="w-10 h-10 bg-[#7753AF] rounded-xl flex items-center justify-center text-white hover:bg-[#5e3d8e] hover:scale-110 transition-all duration-300 shadow-md group/btn"
                                     title="Lihat Detail">
+
                                     <i
                                         class="fa-solid fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300"></i>
-                                </button>
+
+                                </a>
 
                             </div>
                         </div>
@@ -157,7 +159,7 @@
 
                     <div class="flex gap-4">
                         <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-                            <img src="{{ asset('frontend/images/tas-gunung.jpg') }}"
+                            <img src="{{ asset('frontend/images/tas.jpg') }}"
                                 class="h-full w-full object-contain object-center p-2 mix-blend-multiply">
                         </div>
 
@@ -190,7 +192,7 @@
 
                     <div class="flex gap-4">
                         <div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
-                            <img src="{{ asset('frontend/images/tenda.jpg') }}"
+                            <img src="{{ asset('frontend/images/tas2.jpg') }}"
                                 class="h-full w-full object-contain object-center p-2 mix-blend-multiply">
                         </div>
                         <div class="flex flex-1 flex-col">

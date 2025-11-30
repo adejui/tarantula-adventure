@@ -13,4 +13,16 @@ class InventoryController extends Controller
         $items = Item::with('category')->orderBy('id', 'desc')->paginate(10);
         return view('frontend.inventory.index', compact('items'));
     }
+
+    public function show($id)
+    {
+        // Nanti disini logika ambil data detail barang by ID:
+        // $item = Item::findOrFail($id);
+        
+        // Ambil data rekomendasi (dummy dulu buat tampilan bawah)
+        // $relatedItems = Item::where('id', '!=', $id)->take(5)->get();
+        
+        // Kita kirim data dummy dulu biar view-nya jalan
+        return view('frontend.inventory.show'); 
+    }
 }

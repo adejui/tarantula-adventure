@@ -27,6 +27,7 @@ Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
+    Route::get('/inventory/{id}', [InventoryController::class, 'show'])->name('inventory.show'); 
 
     Route::get('/kegiatan', [PublicActivityController::class, 'index'])->name('kegiatan');
 
