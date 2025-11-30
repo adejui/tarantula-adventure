@@ -2,7 +2,7 @@
 
 @section('content')
     <div
-        class="bg-[#9C87CA] border border-[#E0E0E0] rounded-xl mb-5 p-6 overflow-hidden dark:border-gray-800 dark:bg-white/3">
+        class="bg-[#9C87CA] border border-[#E0E0E0] rounded-xl mb-5 mt-6 p-6 overflow-hidden dark:border-gray-800 dark:bg-white/3">
         <h3 class="text-white font-semibold text-3xl">
             Welcome Back,
             {{ auth()->user()->role === 'admin' ? 'Admin' : 'Logistik' }}!

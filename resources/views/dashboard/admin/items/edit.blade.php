@@ -7,6 +7,12 @@
         @endif
     </div>
 
+    <x-breadcrumb :items="[
+        ['label' => 'Inventoris', 'url' => route('items.index')],
+        ['label' => 'Daftar Alat', 'url' => route('items.index')],
+        ['label' => 'Edit Alat'],
+    ]" />
+
     <div
         class="bg-white border border-[#E0E0E0] rounded-xl h-auto p-4 overflow-hidden px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/3 sm:px-6s">
         <h3 class="font-bold text-2xl text-gray-800 dark:text-white/90 mb-6">Edit Alat</h3>

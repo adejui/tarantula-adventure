@@ -381,7 +381,7 @@
                         {{ Route::currentRouteName() == 'opas.index'
                             ? 'menu-dropdown-item-active text-white bg-[#3A1096]/40 dark:text-white'
                             : 'menu-dropdown-item-inactive text-gray-700 dark:text-gray-300' }}">
-                                        Data Peminjam
+                                        Daftar Peminjam
                                     </a>
                                 </li>
 

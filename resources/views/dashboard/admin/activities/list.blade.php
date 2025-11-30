@@ -7,6 +7,11 @@
         @endif
     </div>
 
+    <x-breadcrumb :items="[
+        ['label' => 'Kegiatan', 'url' => route('list.activity')],
+        ['label' => 'Daftar Kegiatan', 'url' => route('list.activity')],
+    ]" />
+
     <div x-data="{ showFilter: false }">
 
         <div

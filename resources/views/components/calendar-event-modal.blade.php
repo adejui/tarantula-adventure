@@ -17,8 +17,12 @@
                 });
             </script>
         @endif
-
     </div>
+
+    <x-breadcrumb :items="[
+        ['label' => 'Kegiatan', 'url' => route('activities.index')],
+        ['label' => 'Kalender Kegiatan', 'url' => route('activities.index')],
+    ]" />
 
     <div x-data="{
         open: false,
