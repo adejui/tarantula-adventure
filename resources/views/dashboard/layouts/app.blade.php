@@ -71,7 +71,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             @include('components.header')
 
             <main>
-                <div class="p-2 max-w-(--breakpoint-2xl) md:p-2 lg:m-2">
+                <div class="px-2 max-w-(--breakpoint-2xl) md:px-2 lg:mx-2">
 
                     @yield('content')
 

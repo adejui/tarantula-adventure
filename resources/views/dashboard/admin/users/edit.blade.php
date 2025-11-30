@@ -1,6 +1,14 @@
 @extends('dashboard.layouts.app')
 
 @section('content')
+    <div class="mb-5 flex justify-end">
+        @if (session('success'))
+            <x-alert-success title="Berhasil!" :message="session('success')" />
+        @endif
+    </div>
+
+    <x-breadcrumb :items="[['label' => 'Anggota', 'url' => route('users.index')], ['label' => 'Edit Anggota']]" />
+
     <div
         class="bg-white border border-[#E0E0E0] rounded-xl h-auto p-4 overflow-hidden px-4 pb-3 pt-4 dark:border-gray-800 dark:bg-white/3 sm:px-6s">
         <h3 class="font-bold text-2xl text-gray-800 dark:text-white/90 mb-6">Edit Anggota</h3>
@@ -9,15 +17,6 @@
             <!-- FOTO PROFIL -->
             <div
                 class="border border-[#E0E0E0] rounded-xl dark:border-gray-700 h-fit dark:bg-white/5 p-6 flex flex-col items-center">
-                {{-- <div class="w-full">
-                    @if ($user->photo)
-                        <img src="{{ Storage::url($user->photo) }}" alt="Foto {{ $user->full_name }}"
-                            class="h-full w-full object-cover rounded-3xl" />
-                    @else
-                        <img src="{{ asset('storage/imgUsers/default-image.png') }}" alt="Foto Default"
-                            class="h-full w-full object-cover rounded-3xl" />
-                    @endif
-                </div> --}}
 
                 <!-- Foto Profil -->
                 <div class="w-full">

@@ -104,9 +104,10 @@ class OpaController extends Controller
             COUNT(*) as total_peminjaman
         ")
             ->groupBy('opas.name')
-            ->orderByRaw('LOWER(opas.name) ASC');
+            ->orderByRaw('LOWER(opas.name) DESC');
 
         $opas = $query->paginate($perPage)->appends($request->all());
+
 
         if ($request->ajax()) {
             return view('dashboard.admin.opas.partials.table', compact('opas'))->render();

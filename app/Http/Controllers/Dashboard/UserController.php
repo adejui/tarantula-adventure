@@ -37,7 +37,7 @@ class UserController extends Controller
 
 
         // Ambil semua user selain admin
-        $query = User::where('role', '!=', 'admin');
+        $query = User::where('role', '!=', 'admin')->orderBy('created_at', 'DESC');
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -190,11 +190,20 @@ class UserController extends Controller
         return view('dashboard.admin.users.edit', compact('user'));
     }
 
+    public function editProfile(User $user)
+    {
+        // dd($user);
+
+        return view('dashboard.admin.users.editProfile', compact('user'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        // dd($request->all());
+
         $validated = $request->validated();
 
         // Prefix disini (biar bisa diganti sewaktu waktu)
@@ -247,7 +256,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('users.index')->with('success', 'Data Anggota berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Data Anggota berhasil diperbarui!');
     }
 
     public function updatePhoto(Request $request, $id)

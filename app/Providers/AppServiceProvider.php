@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use App\Http\View\Composers\LoanNotificationComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale('id');
+
+        View::composer(
+            'components.header',     // view target
+            LoanNotificationComposer::class // composer yg dibuat
+        );
     }
 }

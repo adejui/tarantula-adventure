@@ -15,6 +15,7 @@ class Loan extends Model
         'borrow_date',
         'return_date',
         'status',
+        'quantity',
         'notes',
         'loan_document',
     ];
@@ -29,8 +30,13 @@ class Loan extends Model
         return $this->belongsTo(Opa::class);
     }
 
+    // public function details()
+    // {
+    //     return $this->hasMany(LoanDetail::class);
+    // }
+
     public function details()
     {
-        return $this->hasMany(LoanDetail::class);
+        return $this->hasMany(LoanDetail::class, 'loan_id');
     }
 }

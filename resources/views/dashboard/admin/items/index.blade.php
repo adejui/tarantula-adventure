@@ -7,6 +7,12 @@
         @endif
     </div>
 
+    <x-breadcrumb :items="[
+        ['label' => 'Inventoris', 'url' => route('items.index')],
+        ['label' => 'Daftar Alat', 'url' => route('items.index')],
+    ]" />
+
+
     <div x-data="{
         showForm: {{ $errors->any() ? 'true' : 'false' }},
     }">

@@ -7,6 +7,11 @@
         @endif
     </div>
 
+    <x-breadcrumb :items="[
+        ['label' => 'Kegiatan', 'url' => route('list.activity')],
+        ['label' => 'Daftar Kegiatan', 'url' => route('list.activity')],
+    ]" />
+
     <div x-data="{ showFilter: false }">
 
         <div
@@ -67,12 +72,6 @@
                             alt="Filter Icon Active Light" class="w-4 h-4 opacity-90 block">
 
                         <span class="text-sm font-medium">Filter</span>
-                    </button>
-
-                    <button @click="showForm = true"
-                        class="inline-flex items-center gap-2 px-4 h-10 text-sm font-medium text-white bg-[#7653afaa] transition rounded-lg shadow-theme-xs hover:bg-[#68489C]">
-                        <img src="{{ asset('assets/images/icons/plus.svg') }}" alt="Tambah" class="h-4 w-4">
-                        Tambah
                     </button>
                 </div>
             </div>

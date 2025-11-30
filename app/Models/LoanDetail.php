@@ -12,6 +12,7 @@ class LoanDetail extends Model
     protected $fillable = [
         'loan_id',
         'item_id',
+        'quantity',
         'condition_on_return',
         'notes',
     ];
