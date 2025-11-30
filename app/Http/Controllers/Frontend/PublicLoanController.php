@@ -32,12 +32,14 @@ class PublicLoanController extends Controller
             'campus_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'user_id' => 'nullable|integer|exists:users,id',
-            'opa_id' => 'nullable|integer',
+            // 'address' => 'required|string', // (Sudah dihapus sesuai request)
+
             'borrow_date' => 'required|date',
             'return_date' => 'required|date|after_or_equal:borrow_date',
-            'status' => 'nullable|string|in:pending,approved,rejected',
-            'notes' => 'nullable|string|max:500',
+
+            // HANYA TULIS SATU KALI SAJA & REQUIRED
+            'notes' => 'required|string|max:500',
+
             'loan_document' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
@@ -48,6 +50,7 @@ class PublicLoanController extends Controller
             'borrow_date.required' => 'Tanggal pinjam wajib diisi.',
             'return_date.required' => 'Tanggal kembali wajib diisi.',
             'return_date.after_or_equal' => 'Tanggal kembali harus setelah atau sama dengan tanggal pinjam.',
+            'notes.required' => 'Keperluan peminjaman wajib diisi.', // Ini akan muncul sekarang
             'loan_document.mimes' => 'File dokumen harus berupa PDF atau DOC/DOCX.',
             'loan_document.max' => 'File dokumen maksimal 2MB.',
         ]);
@@ -58,6 +61,9 @@ class PublicLoanController extends Controller
             return redirect()->back()->with('error', 'Keranjang masih kosong!');
         }
 
+        // === SIMPAN DATA PEMINJAM (OPA) ===
+        // Note: Saya HAPUS 'notes' disini karena kemungkinan besar tabel 'opas' tidak punya kolom notes.
+        // Notes itu milik transaksi (Loan), bukan milik orangnya (Opa).
         $opa = Opa::create([
             'name' => $request->name,
             'organization_name' => $request->organization_name,
@@ -66,12 +72,14 @@ class PublicLoanController extends Controller
             'email' => $request->email,
         ]);
 
+        // === SIMPAN DATA TRANSAKSI (LOAN) ===
+        // Nah, 'notes' disimpannya disini
         $loan = Loan::create([
             'opa_id' => $opa->id,
             'borrow_date' => $request->borrow_date,
             'return_date' => $request->return_date,
             'status' => 'requested',
-            'notes' => $request->notes,
+            'notes' => $request->notes, // <--- DISINI
             'loan_document' => $request->hasFile('loan_document')
                 ? $request->file('loan_document')->store('loan_documents')
                 : null,

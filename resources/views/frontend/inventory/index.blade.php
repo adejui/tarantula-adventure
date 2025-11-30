@@ -125,8 +125,9 @@
             class="relative w-16 h-16 bg-[#7C3AED] text-white rounded-full shadow-2xl hover:bg-[#6D28D9] hover:scale-110 transition-all duration-300 flex items-center justify-center group">
             <i class="fa-solid fa-cart-shopping text-2xl group-hover:animate-bounce"></i>
 
-            <span
-                class="absolute top-0 right-0 w-6 h-6 bg-red-500 border-2 border-white rounded-full text-[10px] font-bold flex items-center justify-center">
+            <span id="cart-badge"
+                class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center 
+            {{ count(session('cart', [])) > 0 ? '' : 'hidden' }}">
                 {{ count(session('cart', [])) }}
             </span>
 
@@ -150,7 +151,7 @@
                     <div>
                         <h2 class="text-xl font-bold text-gray-900">Keranjang Alat</h2>
                         <p class="text-sm text-gray-500 mt-1">
-                            {{ count(session('cart', [])) }} Barang dipilih
+                            <span id="drawer-count">{{ count(session('cart', [])) }}</span> Jenis Barang dipilih
                         </p>
                     </div>
                     <button type="button" class="text-gray-400 hover:text-gray-500" onclick="toggleCart()">
@@ -230,6 +231,24 @@
 
 
     <script>
+        // --- FUNGSI BARU: UPDATE BADGE MERAH ---
+        function updateFloatingBadge(total) {
+            const badge = document.getElementById("cart-badge");
+
+            if (badge) {
+                // Update angkanya
+                badge.innerText = total;
+
+                // Logic: Jika 0 sembunyikan, jika > 0 munculkan
+                if (total > 0) {
+                    badge.classList.remove("hidden");
+                } else {
+                    badge.classList.add("hidden");
+                }
+            }
+        }
+
+        // --- FUNGSI DRAWER (BUKA/TUTUP) ---
         function toggleCart() {
             const drawer = document.getElementById("cart-drawer");
             const panel = document.getElementById("cart-panel");
@@ -237,36 +256,50 @@
 
             if (drawer.classList.contains("hidden")) {
                 drawer.classList.remove("hidden");
-
                 setTimeout(() => {
                     overlay.classList.remove("opacity-0");
                     panel.classList.remove("translate-x-full");
                 }, 10);
-
             } else {
                 overlay.classList.add("opacity-0");
                 panel.classList.add("translate-x-full");
-
                 setTimeout(() => {
                     drawer.classList.add("hidden");
                 }, 500);
             }
         }
 
+        // --- RELOAD ISI DALAM DRAWER ---
         function reloadCart() {
             fetch("{{ route('frontend.inventory') }}?cart=1")
-
                 .then(res => res.text())
                 .then(html => {
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
 
-                    // ambil ulang cart-items
+                    // 1. Update List Barang (Seperti biasa)
                     document.getElementById("cart-items").innerHTML =
                         doc.querySelector("#cart-items").innerHTML;
+
+                    // 2. Update Footer Total (Total Unit)
+                    const newTotal = doc.querySelector("#cart-total").innerText;
+                    const footerTotal = document.getElementById("cart-total");
+                    if (footerTotal) {
+                        footerTotal.innerText = newTotal;
+                    }
+
+                    // 3. UPDATE HEADER COUNT (YANG KAMU TANYAKAN)
+                    // Kita ambil angka dari HTML baru, lalu tempel ke HTML sekarang
+                    const newHeaderCount = doc.querySelector("#drawer-count").innerText;
+                    const headerCountElement = document.getElementById("drawer-count");
+
+                    if (headerCountElement) {
+                        headerCountElement.innerText = newHeaderCount;
+                    }
                 });
         }
 
+        // --- ADD TO CART ---
         function addToCart(id) {
             fetch("/inventory/cart/add/" + id, {
                     method: "POST",
@@ -276,15 +309,18 @@
                 })
                 .then(res => res.json())
                 .then(data => {
-                    reloadCart();
-                    toggleCart();
+                    reloadCart(); // Refresh list drawer
+                    toggleCart(); // Buka drawer otomatis
 
+                    // UPDATE BADGE MERAH DISINI
                     if (data.total !== undefined) {
-                        document.getElementById("cart-total").innerText = data.total;
+                        updateFloatingBadge(data.total);
                     }
-                });
+                })
+                .catch(err => console.error("Error:", err));
         }
 
+        // --- UPDATE QUANTITY ---
         function updateQty(id, qty) {
             fetch("/inventory/cart/update-qty", {
                     method: "POST",
@@ -301,21 +337,34 @@
                 .then(data => {
                     reloadCart();
 
-                    // Update footer total
+                    // UPDATE BADGE MERAH DISINI
                     if (data.total !== undefined) {
-                        document.getElementById("cart-total").innerText = data.total;
+                        updateFloatingBadge(data.total);
                     }
-                });
+                })
+                .catch(err => console.error("Error:", err));
         }
 
-
+        // --- REMOVE ITEM ---
         function removeItem(id) {
+            // Optional: Confirm sebelum hapus
+            // if(!confirm("Hapus item ini?")) return;
+
             fetch("/inventory/cart/remove/" + id, {
-                method: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                }
-            }).then(() => reloadCart());
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    reloadCart();
+
+                    // UPDATE BADGE MERAH DISINI
+                    if (data.total !== undefined) {
+                        updateFloatingBadge(data.total);
+                    }
+                });
         }
     </script>
 @endsection
