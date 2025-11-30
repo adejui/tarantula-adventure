@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('opas', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('organization_name')->nullable();
             $table->string('campus_name')->nullable();
             $table->string('phone_number')->nullable();

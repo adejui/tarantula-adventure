@@ -70,41 +70,49 @@ class OpaController extends Controller
             $join->on(DB::raw('LOWER(opas.name)'), '=', 'latest_data.name_key');
         })
             ->selectRaw("
-            MIN(opas.id) as id,
-            opas.name,
+        MIN(opas.id) as id,
+        opas.name,
 
-            (SELECT email 
-                FROM opas o1 
-                WHERE LOWER(o1.name) = LOWER(opas.name) 
-                ORDER BY id DESC 
-                LIMIT 1
-            ) as email,
+        (SELECT email 
+            FROM opas o1 
+            WHERE LOWER(o1.name) = LOWER(opas.name) 
+            ORDER BY id DESC 
+            LIMIT 1
+        ) as email,
 
-            (SELECT phone_number 
-                FROM opas o2 
-                WHERE LOWER(o2.name) = LOWER(opas.name) 
-                ORDER BY id DESC 
-                LIMIT 1
-            ) as phone_number,
+        (SELECT phone_number 
+            FROM opas o2 
+            WHERE LOWER(o2.name) = LOWER(opas.name) 
+            ORDER BY id DESC 
+            LIMIT 1
+        ) as phone_number,
 
-            (SELECT campus_name 
-                FROM opas o3 
-                WHERE LOWER(o3.name) = LOWER(opas.name) 
-                ORDER BY id DESC 
-                LIMIT 1
-            ) as campus_name,
+        (SELECT campus_name 
+            FROM opas o3 
+            WHERE LOWER(o3.name) = LOWER(opas.name) 
+            ORDER BY id DESC 
+            LIMIT 1
+        ) as campus_name,
 
-            (SELECT organization_name 
-                FROM opas o4 
-                WHERE LOWER(o4.name) = LOWER(opas.name) 
-                ORDER BY id DESC 
-                LIMIT 1
-            ) as organization_name,
+        (SELECT organization_name 
+            FROM opas o4 
+            WHERE LOWER(o4.name) = LOWER(opas.name) 
+            ORDER BY id DESC 
+            LIMIT 1
+        ) as organization_name,
 
-            COUNT(*) as total_peminjaman
-        ")
+        (SELECT created_at
+            FROM opas o5
+            WHERE LOWER(o5.name) = LOWER(opas.name)
+            ORDER BY id DESC
+            LIMIT 1
+        ) as latest_created_at,
+
+        COUNT(*) as total_peminjaman
+    ")
             ->groupBy('opas.name')
-            ->orderByRaw('LOWER(opas.name) DESC');
+            ->orderBy('latest_created_at', 'DESC');
+
 
         $opas = $query->paginate($perPage)->appends($request->all());
 

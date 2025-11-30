@@ -32,14 +32,9 @@ class PublicLoanController extends Controller
             'campus_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            // 'address' => 'required|string', // (Sudah dihapus sesuai request)
-
             'borrow_date' => 'required|date',
             'return_date' => 'required|date|after_or_equal:borrow_date',
-
-            // HANYA TULIS SATU KALI SAJA & REQUIRED
             'notes' => 'required|string|max:500',
-
             'loan_document' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
@@ -61,9 +56,6 @@ class PublicLoanController extends Controller
             return redirect()->back()->with('error', 'Keranjang masih kosong!');
         }
 
-        // === SIMPAN DATA PEMINJAM (OPA) ===
-        // Note: Saya HAPUS 'notes' disini karena kemungkinan besar tabel 'opas' tidak punya kolom notes.
-        // Notes itu milik transaksi (Loan), bukan milik orangnya (Opa).
         $opa = Opa::create([
             'name' => $request->name,
             'organization_name' => $request->organization_name,
@@ -72,8 +64,6 @@ class PublicLoanController extends Controller
             'email' => $request->email,
         ]);
 
-        // === SIMPAN DATA TRANSAKSI (LOAN) ===
-        // Nah, 'notes' disimpannya disini
         $loan = Loan::create([
             'opa_id' => $opa->id,
             'borrow_date' => $request->borrow_date,

@@ -63,12 +63,26 @@ class LoanController extends Controller
 
         $loan->update(['status' => 'approved']);
 
+        // Siapkan data untuk email
         $data = [
-            'name' => $loan->opa->full_name,
             'id' => $loan->id,
+            'email' => optional($loan->user)->email
+                ?? optional($loan->opa)->email,
+
+            'name' => optional($loan->user)->full_name
+                ?? optional($loan->opa)->name,
+
+            'organization_name' => optional($loan->opa)->organization_name,
+            'campus_name' => optional($loan->opa)->campus_name,
+            'phone_number' => optional($loan->user)->phone_number ?? optional($loan->opa)->phone_number,
+            'borrow_date' => $loan->borrow_date,
+            'return_date' => $loan->return_date,
+            'quantity' => $loan->quantity,
         ];
 
-        Mail::to($loan->opa->email)->send(new LoanApprovedMail($data));
+        // Mail::to($loan->opa->email)->send(new LoanApprovedMail($data));
+        Mail::to($data['email'])->send(new LoanApprovedMail($data));
+
 
         return redirect()->route('loans.index')->with('success', ' Berhasil diACC.');
     }

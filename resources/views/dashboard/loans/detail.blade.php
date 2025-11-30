@@ -37,6 +37,48 @@
                 </div>
 
                 <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                    <p class="text-theme-xs text-gray-500 dark:text-gray-400">Email</p>
+                    <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                        @if (!empty($loan->user_id))
+                            {{ $loan->user->email }}
+                        @else
+                            {{ $loan->opa->email }}
+                        @endif
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                    <p class="text-theme-xs text-gray-500 dark:text-gray-400">No Telp</p>
+                    <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                        @if (!empty($loan->user_id))
+                            {{ $loan->user->phone_number }}
+                        @else
+                            {{ $loan->opa->phone_number }}
+                        @endif
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                    <p class="text-theme-xs text-gray-500 dark:text-gray-400">No Telp</p>
+                    <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                        @if (!empty($loan->user_id))
+                        @else
+                            {{ $loan->opa->organization_name }}
+                        @endif
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                    <p class="text-theme-xs text-gray-500 dark:text-gray-400">No Telp</p>
+                    <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                        @if (!empty($loan->user_id))
+                        @else
+                            {{ $loan->opa->campus_name }}
+                        @endif
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
                     <p class="text-theme-xs text-gray-500 dark:text-gray-400">Status</p>
                     <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
                         <x-status-badge :status="$loan->status" />

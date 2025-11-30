@@ -30,8 +30,58 @@
                 <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
                     <p class="text-theme-xs text-gray-500 dark:text-gray-400">Nama Peminjam</p>
                     <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
-                        {{ $loan->user_id ? $loan->user->full_name : $loan->opa->name }}
+                        @if (!empty($loan->user_id))
+                            {{ $loan->user->full_name }}
+                        @else
+                            {{ $loan->opa->name }}
+                        @endif
                     </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2">
+                    <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                        <p class="text-theme-xs text-gray-500 dark:text-gray-400">Email</p>
+                        <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                            @if (!empty($loan->user_id))
+                                {{ $loan->user->email }}
+                            @else
+                                {{ $loan->opa->email }}
+                            @endif
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                        <p class="text-theme-xs text-gray-500 dark:text-gray-400">No Telp</p>
+                        <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                            @if (!empty($loan->user_id))
+                                {{ $loan->user->phone_number }}
+                            @else
+                                {{ $loan->opa->phone_number }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2">
+                    <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                        <p class="text-theme-xs text-gray-500 dark:text-gray-400">Organisasi</p>
+                        <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                            @if (!empty($loan->user_id))
+                            @else
+                                {{ $loan->opa->organization_name }}
+                            @endif
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
+                        <p class="text-theme-xs text-gray-500 dark:text-gray-400">Kampus</p>
+                        <p class="block text-theme-sm font-medium text-gray-700 dark:text-gray-400">
+                            @if (!empty($loan->user_id))
+                            @else
+                                {{ $loan->opa->campus_name }}
+                            @endif
+                        </p>
+                    </div>
                 </div>
 
                 <div class="flex flex-col gap-y-1 w-fit justify-center mb-5">
