@@ -1,29 +1,43 @@
 <?php
 
 // --- CONTROLLERS FRONTEND ---
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\InventoryController;
-use App\Http\Controllers\Frontend\PublicActivityController;
+use App\Mail\LoanApprovedMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 // --- CONTROLLERS BACKEND ---
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\OpaController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Dashboard\ItemController;
 use App\Http\Controllers\Dashboard\LoanController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\ArticleController;
 use App\Http\Controllers\Dashboard\ActivityController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Frontend\InventoryController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Frontend\PublicLoanController;
 use App\Http\Controllers\Dashboard\LoanDetailController;
 use App\Http\Controllers\Dashboard\ActivityPhotoController;
+use App\Http\Controllers\Frontend\PublicActivityController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
-use App\Http\Controllers\Frontend\PublicLoanController;
+
+// Route::get('/test-mail', function () {
+//     $loan = App\Models\Loan::first(); // contoh
+//     Mail::to('chestnuthealer@gmail.com')->send(new LoanApprovedMail($loan));
+//     return "Email dikirim!";
+// });
+Route::get('/test-email', function () {
+    Mail::raw('Test Mailtrap', function ($msg) {
+        $msg->to('chestnuthealer@gmail.com')->subject('Testing Mailtrap');
+    });
+
+    return 'Email sudah dikirim';
+});
 
 // --- FRONTEND ---
-// Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
 Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -31,11 +45,6 @@ Route::name('frontend.')->group(function () {
     Route::get('/inventory/{id}', [InventoryController::class, 'show'])->name('inventory.show');
 
     Route::get('/kegiatan', [PublicActivityController::class, 'index'])->name('kegiatan');
-
-    // Route::get('/pinjaman', [PublicLoanController::class, 'create'])->name('pinjaman');
-
-
-
 
     Route::post('/inventory/cart/add/{id}', [InventoryController::class, 'addToCart'])->name('inventory.cart.add');
 
@@ -46,10 +55,6 @@ Route::name('frontend.')->group(function () {
 
     Route::post('/inventory/cart/update/{id}', [InventoryController::class, 'updateCart'])->name('inventory.cart.update');
     Route::post('/inventory/cart/remove/{id}', [InventoryController::class, 'removeFromCart'])->name('inventory.cart.remove');
-
-
-    // Route::get('/pinjaman', [InventoryController::class, 'pinjaman'])
-    //     ->name('frontend.pinjaman');
 
     Route::get('/pinjaman', [PublicLoanController::class, 'pinjamanForm'])->name('pinjaman');
 

@@ -51,8 +51,8 @@ class StatusBadge extends Component
     public function color()
     {
         return match ($this->status) {
-            'available', 'active', 'approved', 'member' => 'bg-green-200 text-green-600 dark:bg-green-500/15 dark:text-green-400',
-            'unavailable', 'rejected', 'admin' => 'bg-red-200 text-red-600 dark:bg-red-500/15 dark:text-red-400',
+            'available', 'published', 'active', 'approved', 'member' => 'bg-green-200 text-green-600 dark:bg-green-500/15 dark:text-green-400',
+            'unavailable', 'draft', 'rejected', 'admin' => 'bg-red-200 text-red-600 dark:bg-red-500/15 dark:text-red-400',
             'requested' => 'bg-blue-200 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400',
             'logistics', 'borrowed' => 'bg-yellow-200 text-yellow-600 dark:bg-yellow-500/15 dark:text-yellow-400',
             'alumni' => 'bg-violet-200 text-violet-600 dark:bg-violet-500/15 dark:text-violet-400',

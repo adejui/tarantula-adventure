@@ -22,8 +22,7 @@ class CategoryController extends Controller
         $query = Category::query()->orderBy('created_at', 'DESC');
 
         if ($search) {
-            $query->where('name', 'like', "%{$search}%");;
-            // Sesuaikan dengan kolom yang memang ada di tabel categories
+            $query->where('name', 'like', "%{$search}%");
         }
 
         $categories = $query->paginate($perPage)->appends($request->all());

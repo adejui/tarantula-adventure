@@ -10,9 +10,11 @@ use App\Models\Category;
 use App\Models\LoanDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreLoanRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdateLoanRequest;
+use App\Mail\LoanApprovedMail;
 
 class LoanController extends Controller
 {
@@ -61,8 +63,45 @@ class LoanController extends Controller
 
         $loan->update(['status' => 'approved']);
 
+        $data = [
+            'name' => $loan->opa->full_name,
+            'id' => $loan->id,
+        ];
+
+        Mail::to($loan->opa->email)->send(new LoanApprovedMail($data));
+
         return redirect()->route('loans.index')->with('success', ' Berhasil diACC.');
     }
+    // public function accept($id)
+    // {
+    //     // Ambil data loan berdasarkan ID
+    //     $loan = Loan::with('user')->findOrFail($id);
+
+    //     // Update status
+    //     $loan->update([
+    //         'status' => 'approved'
+    //     ]);
+
+    //     // Pastikan user punya email
+    //     if ($loan->user && $loan->user->email) {
+
+    //         // Data untuk email
+    //         $data = [
+    //             'name'  => $loan->user->full_name,
+    //             'id'    => $loan->id,
+    //             'email' => $loan->user->email
+    //         ];
+
+    //         // Kirim email
+    //         Mail::to($loan->user->email)
+    //             ->send(new LoanApprovedMail($data));
+    //     }
+
+    //     return redirect()
+    //         ->route('loans.index')
+    //         ->with('success', 'Berhasil di-ACC dan email sudah dikirim.');
+    // }
+
 
     public function reject($loan)
     {

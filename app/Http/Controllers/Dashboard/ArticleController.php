@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -10,9 +11,25 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+
+        $query = Article::query()->orderBy('created_at', 'DESC');
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");;
+        }
+
+        $articles = $query->paginate($perPage)->appends($request->all());
+
+        if ($request->ajax()) {
+            // Partial view hanya isi tabel
+            return view('dashboard.admin.articles.partials.table', compact('articles'))->render();
+        }
+
+        return view('dashboard.admin.articles.index', compact('articles'));
     }
 
     /**
@@ -58,8 +75,11 @@ class ArticleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        return redirect()->route('articles.index')
+            ->with('success', 'Artikel berhasil dihapus!');
     }
 }
