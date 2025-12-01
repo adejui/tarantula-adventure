@@ -65,6 +65,7 @@ class LoanController extends Controller
 
         // Siapkan data untuk email
         $data = [
+            'name' => $loan->opa->name,
             'id' => $loan->id,
             'email' => optional($loan->user)->email
                 ?? optional($loan->opa)->email,

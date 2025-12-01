@@ -16,42 +16,49 @@
                 </nav>
             </div>
 
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-10">
+            <form action="{{ route('frontend.inventory') }}" method="GET"
+                class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-10 w-full">
 
                 <div class="relative w-full lg:w-1/3">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" placeholder="Cari barang..."
-                        class="w-full py-3 pl-11 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm placeholder-gray-400 shadow-sm">
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="Cari nama atau kode barang..."
+                        class="w-full py-3 pl-11 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm text-black placeholder-gray-400 shadow-sm">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 w-full lg:w-auto lg:flex lg:items-center">
 
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                         <span class="text-xs sm:text-sm font-semibold text-gray-700">Kategori</span>
-                        <select
+                        <select name="category" onchange="this.form.submit()"
                             class="w-full sm:w-auto py-2.5 px-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-[#7C3AED] cursor-pointer shadow-sm">
-                            <option>Semua</option>
-                            <option>Tenda</option>
-                            <option>Tas</option>
-                            <option>Alat Masak</option>
+
+                            <option value="Semua">Semua</option>
+
+                            @foreach ($categories as $cat)
+                                <option value="{{ $cat->name }}"
+                                    {{ request('category') == $cat->name ? 'selected' : '' }}>
+                                    {{ $cat->name }}
+                                </option>
+                            @endforeach
+
                         </select>
                     </div>
 
                     <div class="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
                         <span class="text-xs sm:text-sm font-semibold text-gray-700">Urutkan</span>
-                        <select
+                        <select name="sort" onchange="this.form.submit()"
                             class="w-full sm:w-auto py-2.5 px-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 focus:outline-none focus:border-[#7C3AED] cursor-pointer shadow-sm">
-                            <option>Terbaru</option>
-                            <option>Terlama</option>
-                            <option>A-Z</option>
+                            <option value="Terbaru" {{ request('sort') == 'Terbaru' ? 'selected' : '' }}>Terbaru</option>
+                            <option value="Terlama" {{ request('sort') == 'Terlama' ? 'selected' : '' }}>Terlama</option>
+                            <option value="A-Z" {{ request('sort') == 'A-Z' ? 'selected' : '' }}>A-Z</option>
                         </select>
                     </div>
 
                 </div>
-            </div>
-
+            </form>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-12">
 
                 @forelse ($items as $item)
@@ -220,7 +227,8 @@
 
                     <div class="mt-6 text-center text-sm text-gray-500">
                         atau
-                        <button type="button" class="font-medium text-[#7C3AED]" onclick="toggleCart()">Lanjut Cari Barang
+                        <button type="button" class="font-medium text-[#7C3AED]" onclick="toggleCart()">Lanjut Cari
+                            Barang
                             →</button>
                     </div>
                 </div>

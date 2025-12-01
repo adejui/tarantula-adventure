@@ -7,13 +7,60 @@ use App\Models\Loan;
 use App\Models\LoanDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class InventoryController extends Controller
 {
     public function index(Request $request)
     {
-        $items = Item::with('category')->orderBy('id', 'desc')->paginate(10);
-        return view('frontend.inventory.index', compact('items'));
+        $query = Item::with('category');
+
+        // --- LOGIC 1: PENCARIAN (SEARCH) ---
+        // Jika user mengetik sesuatu di kolom search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('code', 'like', '%' . $search . '%');
+            });
+        }
+
+        // --- LOGIC 2: FILTER KATEGORI ---
+        // Jika user memilih kategori selain "Semua"
+        if ($request->filled('category') && $request->category !== 'Semua') {
+            $query->whereHas('category', function ($q) use ($request) {
+                $q->where('name', $request->category);
+            });
+        }
+
+        // --- LOGIC 3: PENGURUTAN (SORT) ---
+        // Cek pilihan user, defaultnya 'Terbaru'
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'Terlama':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'A-Z':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'Terbaru':
+                default:
+                    $query->orderBy('created_at', 'desc');
+                    break;
+            }
+        } else {
+            // Default jika tidak memilih apa-apa
+            $query->orderBy('created_at', 'desc');
+        }
+
+        // 4. Eksekusi Pagination
+        // withQueryString() PENTING: Supaya saat klik Halaman 2, filter pencarian tidak hilang
+        $items = $query->paginate(10)->withQueryString();
+
+        // (Opsional) Ambil data kategori untuk dropdown (biar ga manual ngetik di HTML)
+        $categories = Category::all();
+
+        return view('frontend.inventory.index', compact('items', 'categories'));
     }
 
     public function show($id)
