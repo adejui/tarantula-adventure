@@ -85,8 +85,13 @@ class PublicLoanController extends Controller
 
         session()->forget('cart');
 
-        return redirect()->back()->with('success', 'Pengajuan berhasil dikirim!');
+        return redirect()->route('frontend.pinjaman.success');
     }
+
+    public function success()
+{
+    return view('frontend.loans.success');
+}
 
     // public function store(Request $request)
     // {

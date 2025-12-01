@@ -57,10 +57,8 @@ Route::name('frontend.')->group(function () {
     Route::post('/inventory/cart/remove/{id}', [InventoryController::class, 'removeFromCart'])->name('inventory.cart.remove');
 
     Route::get('/pinjaman', [PublicLoanController::class, 'pinjamanForm'])->name('pinjaman');
-
-
-    Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])
-        ->name('pinjaman.store');
+    Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])->name('pinjaman.store');
+    Route::get('/pinjaman/sukses', [PublicLoanController::class, 'success'])->name('pinjaman.success');
 });
 
 
