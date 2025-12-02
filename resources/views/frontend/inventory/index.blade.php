@@ -23,8 +23,11 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
+
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama atau kode barang..."
+                        placeholder="Cari nama atau kode barang..." oninput="autoSearch(this)"
+                        onfocus="var val=this.value; this.value=''; this.value= val;"
+                        {{ request('search') ? 'autofocus' : '' }}
                         class="w-full py-3 pl-11 pr-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm text-black placeholder-gray-400 shadow-sm">
                 </div>
 
@@ -239,15 +242,12 @@
 
 
     <script>
-        // --- FUNGSI BARU: UPDATE BADGE MERAH ---
         function updateFloatingBadge(total) {
             const badge = document.getElementById("cart-badge");
 
             if (badge) {
-                // Update angkanya
                 badge.innerText = total;
 
-                // Logic: Jika 0 sembunyikan, jika > 0 munculkan
                 if (total > 0) {
                     badge.classList.remove("hidden");
                 } else {
@@ -256,7 +256,6 @@
             }
         }
 
-        // --- FUNGSI DRAWER (BUKA/TUTUP) ---
         function toggleCart() {
             const drawer = document.getElementById("cart-drawer");
             const panel = document.getElementById("cart-panel");
@@ -277,7 +276,6 @@
             }
         }
 
-        // --- RELOAD ISI DALAM DRAWER ---
         function reloadCart() {
             fetch("{{ route('frontend.inventory') }}?cart=1")
                 .then(res => res.text())
@@ -285,19 +283,15 @@
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(html, "text/html");
 
-                    // 1. Update List Barang (Seperti biasa)
                     document.getElementById("cart-items").innerHTML =
                         doc.querySelector("#cart-items").innerHTML;
 
-                    // 2. Update Footer Total (Total Unit)
                     const newTotal = doc.querySelector("#cart-total").innerText;
                     const footerTotal = document.getElementById("cart-total");
                     if (footerTotal) {
                         footerTotal.innerText = newTotal;
                     }
 
-                    // 3. UPDATE HEADER COUNT (YANG KAMU TANYAKAN)
-                    // Kita ambil angka dari HTML baru, lalu tempel ke HTML sekarang
                     const newHeaderCount = doc.querySelector("#drawer-count").innerText;
                     const headerCountElement = document.getElementById("drawer-count");
 
@@ -307,7 +301,6 @@
                 });
         }
 
-        // --- ADD TO CART ---
         function addToCart(id) {
             fetch("/inventory/cart/add/" + id, {
                     method: "POST",
@@ -317,10 +310,9 @@
                 })
                 .then(res => res.json())
                 .then(data => {
-                    reloadCart(); // Refresh list drawer
-                    toggleCart(); // Buka drawer otomatis
+                    reloadCart(); 
+                    toggleCart(); 
 
-                    // UPDATE BADGE MERAH DISINI
                     if (data.total !== undefined) {
                         updateFloatingBadge(data.total);
                     }
@@ -328,7 +320,6 @@
                 .catch(err => console.error("Error:", err));
         }
 
-        // --- UPDATE QUANTITY ---
         function updateQty(id, qty) {
             fetch("/inventory/cart/update-qty", {
                     method: "POST",
@@ -345,7 +336,6 @@
                 .then(data => {
                     reloadCart();
 
-                    // UPDATE BADGE MERAH DISINI
                     if (data.total !== undefined) {
                         updateFloatingBadge(data.total);
                     }
@@ -353,10 +343,7 @@
                 .catch(err => console.error("Error:", err));
         }
 
-        // --- REMOVE ITEM ---
         function removeItem(id) {
-            // Optional: Confirm sebelum hapus
-            // if(!confirm("Hapus item ini?")) return;
 
             fetch("/inventory/cart/remove/" + id, {
                     method: "POST",
@@ -368,11 +355,21 @@
                 .then(data => {
                     reloadCart();
 
-                    // UPDATE BADGE MERAH DISINI
                     if (data.total !== undefined) {
                         updateFloatingBadge(data.total);
                     }
                 });
+        }
+    </script>
+    <script>
+        let searchTimer = null;
+
+        function autoSearch(element) {
+            clearTimeout(searchTimer);
+
+            searchTimer = setTimeout(() => {
+                element.form.submit();
+            }, 800);
         }
     </script>
 @endsection
