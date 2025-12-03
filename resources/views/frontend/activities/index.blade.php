@@ -26,13 +26,13 @@
                     <div class="flex items-center gap-3 bg-gray-100 p-1.5 rounded-2xl">
                         <a href="{{ route('frontend.kegiatan') }}"
                             class="px-6 py-3 rounded-xl text-sm font-bold shadow-sm transition-all duration-300
-                {{ request('type') != 'rapat' ? 'bg-[#7753AF] text-white' : 'text-gray-500 hover:text-[#7753AF]' }}">
+                {{ request('type') != 'meeting' ? 'bg-[#7753AF] text-white' : 'text-gray-500 hover:text-[#7753AF]' }}">
                             Jadwal Kegiatan
                         </a>
 
                         <button onclick="accessRapat()"
                             class="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300
-                {{ request('type') == 'rapat' ? 'bg-[#7753AF] text-white shadow-sm' : 'text-gray-500 hover:text-[#7753AF] hover:bg-white' }}">
+                {{ request('type') == 'meeting' ? 'bg-[#7753AF] text-white shadow-sm' : 'text-gray-500 hover:text-[#7753AF] hover:bg-white' }}">
                             Jadwal Rapat <i class="fa-solid fa-lock ml-1 text-xs opacity-70"></i>
                         </button>
                     </div>
@@ -120,7 +120,7 @@
         function accessRapat() {
             const isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
             if (isLoggedIn) {
-                window.location.href = "{{ route('frontend.kegiatan') }}?type=rapat";
+                window.location.href = "{{ route('frontend.kegiatan') }}?type=meeting";
             } else {
                 Swal.fire({
                     title: 'Akses Terbatas!',
@@ -133,7 +133,6 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Kirim sinyal ke window browser: "Woy, buka login dong!"
                         window.dispatchEvent(new CustomEvent('open-login-modal'));
                     }
                 });
