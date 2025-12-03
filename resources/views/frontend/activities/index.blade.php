@@ -132,7 +132,10 @@
                     confirmButtonText: 'Login Sekarang',
                     cancelButtonText: 'Batal'
                 }).then((result) => {
-                    if (result.isConfirmed) window.location.href = "{{ route('login') }}";
+                    if (result.isConfirmed) {
+                        // Kirim sinyal ke window browser: "Woy, buka login dong!"
+                        window.dispatchEvent(new CustomEvent('open-login-modal'));
+                    }
                 });
             }
         }

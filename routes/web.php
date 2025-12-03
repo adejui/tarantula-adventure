@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\OpaController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\Dashboard\ItemController;
 use App\Http\Controllers\Dashboard\LoanController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Dashboard\ActivityPhotoController;
 use App\Http\Controllers\Frontend\PublicActivityController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
+
 
 // Route::get('/test-mail', function () {
 //     $loan = App\Models\Loan::first(); // contoh
@@ -59,6 +61,9 @@ Route::name('frontend.')->group(function () {
     Route::get('/pinjaman', [PublicLoanController::class, 'pinjamanForm'])->name('pinjaman');
     Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])->name('pinjaman.store');
     Route::get('/pinjaman/sukses', [PublicLoanController::class, 'success'])->name('pinjaman.success');
+
+    Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');   
+    // Route::get('/artikel/{slug}', [ArticleController::class, 'show'])->name('frontend.articles.show');
 });
 
 
