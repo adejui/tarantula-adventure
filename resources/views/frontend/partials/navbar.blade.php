@@ -87,7 +87,7 @@
                             class="flex items-center gap-3 pl-2 pr-1 py-1 rounded-full hover:bg-white/10 transition-all border border-transparent hover:border-white/10">
                             <div class="hidden lg:flex flex-col items-end leading-tight">
                                 <span class="font-bold text-sm text-white group-hover:text-[#7C3AED] transition-colors">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->full_name }}
                                 </span>
                                 <span class="text-[10px] text-gray-400 uppercase tracking-widest font-medium">
                                     {{ Auth::user()->role ?? 'ANGGOTA' }}
