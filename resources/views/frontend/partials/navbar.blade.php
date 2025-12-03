@@ -38,7 +38,7 @@
                 <div class="absolute top-full left-0 w-full h-4 bg-transparent"></div>
             </div>
 
-            <a href="#" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
+            <a href="{{ route('frontend.contact') }}" class="flex items-center gap-2 hover:text-white hover:scale-110 transition-all">
                 <i class="fa-solid fa-phone"></i> Contact Us
             </a>
         </div>

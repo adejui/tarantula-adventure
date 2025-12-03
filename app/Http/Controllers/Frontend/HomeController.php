@@ -22,4 +22,9 @@ class HomeController extends Controller
 
         return view('frontend.home.index', compact('inventoryItems', 'activities'));
     }
+
+    public function contact()
+    {
+        return view('frontend.contact.index');
+    }
 }
