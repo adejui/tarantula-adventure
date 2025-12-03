@@ -53,17 +53,6 @@
                         </button>
                     </form>
                 </div>
-
-                {{-- <div class="flex flex-inline w-full gap-x-3 items-center justify-center">
-                    <a href="{{ route('users.edit', $user->id) }}" title="Edit"
-                        class="p-2.5 mt-6 border-2 border-[#7753AF] dark:border-gray-700 bg-[#7753AF] w-full rounded-xl dark:text-white focus:outline-none cursor-pointer flex items-center justify-center">
-                        <span class="text-sm text-white">Ganti</span>
-                    </a>
-                    <a href="{{ route('users.edit', $user->id) }}" title="Edit"
-                        class="p-2.5 mt-6 border-2 border-[#7753AF] dark:border-gray-700 bg-transparent w-full rounded-xl dark:text-white focus:outline-none cursor-pointer flex items-center justify-center">
-                        <span class="text-sm text-[#7753AF]">Hapus</span>
-                    </a>
-                </div> --}}
             </div>
 
             <!-- INFORMASI -->

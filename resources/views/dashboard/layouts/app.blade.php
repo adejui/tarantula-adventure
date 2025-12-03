@@ -49,9 +49,21 @@
             scrollbar-width: none;
             /* untuk Firefox */
         }
+
+        #editor .ql-editor {
+            min-height: 380px;
+            /* ubah sesuai kebutuhan */
+            max-height: 800px;
+            /* opsional */
+            overflow-y: auto;
+        }
     </style>
 
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
 </head>
 

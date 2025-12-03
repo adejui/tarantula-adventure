@@ -49,11 +49,12 @@
                     </div>
                 </div>
 
-                <button @click="openCreate()"
+                <a href="{{ route('articles.create') }}"
                     class="inline-flex items-center gap-2 px-4 h-10 text-sm font-medium text-white bg-[#7653afaa] transition rounded-lg shadow-theme-xs hover:bg-[#68489C]">
                     <img src="{{ asset('assets/images/icons/plus.svg') }}" alt="Tambah" class="h-4 w-4">
                     Tambah
-                </button>
+                </a>
+
             </div>
         </div>
     </div>

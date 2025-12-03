@@ -66,18 +66,62 @@
 
 
             @auth
-                <div class="relative group cursor-pointer mr-2">
-                    <button
+                <div x-data="{ openNotif: false }" class="relative mr-2">
+
+                    <button @click="openNotif = !openNotif" @click.away="openNotif = false"
                         class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-gray-300 hover:bg-[#7C3AED] hover:text-white transition-all duration-300 relative">
+
                         <i class="fa-regular fa-bell text-lg"></i>
-                        <span
-                            class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#1c1c1c]"></span>
+
+                        @if ($latestActivities->count() > 0)
+                            <span
+                                class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[#1c1c1c]"></span>
+                        @endif
+
                     </button>
-                    <div
-                        class="absolute top-full right-0 mt-2 w-max px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        Notifikasi
+
+                    <div x-show="openNotif" x-transition.opacity.duration.150ms x-cloak
+                        class="absolute right-0 mt-2 w-80 bg-white text-gray-800 rounded-xl shadow-2xl py-2 z-50 border border-gray-100">
+
+                        <p class="px-4 py-2 text-xl font-semibold text-[#7c56b5] border-b">Notifikasi</p>
+
+                        <div class="max-h-60 overflow-y-auto">
+
+                            @forelse ($latestActivities as $activity)
+                                <a href="{{ route('frontend.kegiatan') }}"
+                                    class="block px-4 py-3 border-b border-gray-100 hover:bg-gray-50 transition">
+
+                                    <p class="text-sm font-semibold text-gray-800 truncate">
+                                        {{ $activity->title }}
+                                    </p>
+                                    <p class="text-xs text-gray-600 mt-0.5">
+                                        @if ($activity->activity_type == 'meeting')
+                                            Rapat
+                                        @elseif($activity->activity_type == 'basic training')
+                                            Diksar
+                                        @elseif($activity->activity_type == 'exploration')
+                                            Pengembaraan
+                                        @elseif($activity->activity_type == 'anniversary')
+                                            Hari Jadi
+                                        @elseif($activity->activity_type == 'others')
+                                            Lain-lain
+                                        @else
+                                            Tidak diketahui
+                                        @endif
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {{ $activity->created_at->diffForHumans() }}
+                                    </p>
+                                </a>
+                            @empty
+                                <p class="px-4 py-3 text-sm text-gray-500">Belum ada kegiatan terbaru.</p>
+                            @endforelse
+
+                        </div>
+
                     </div>
                 </div>
+
 
                 <div x-data="{ userDropdown: false }" class="relative">
                     <button @click="userDropdown = !userDropdown" @click.away="userDropdown = false"

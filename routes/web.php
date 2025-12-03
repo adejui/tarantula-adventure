@@ -25,12 +25,12 @@ use App\Http\Controllers\Frontend\PublicActivityController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
 
-
 // Route::get('/test-mail', function () {
 //     $loan = App\Models\Loan::first(); // contoh
 //     Mail::to('chestnuthealer@gmail.com')->send(new LoanApprovedMail($loan));
 //     return "Email dikirim!";
 // });
+
 Route::get('/test-email', function () {
     Mail::raw('Test Mailtrap', function ($msg) {
         $msg->to('chestnuthealer@gmail.com')->subject('Testing Mailtrap');
@@ -63,7 +63,7 @@ Route::name('frontend.')->group(function () {
     Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])->name('pinjaman.store');
     Route::get('/pinjaman/sukses', [PublicLoanController::class, 'success'])->name('pinjaman.success');
 
-    Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');   
+    Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');
     // Route::get('/artikel/{slug}', [ArticleController::class, 'show'])->name('frontend.articles.show');
 });
 
@@ -72,7 +72,7 @@ Route::name('frontend.')->group(function () {
 // --- Login ---
 Route::middleware('guest')->group(function () {
 
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    // Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
@@ -104,7 +104,6 @@ Route::middleware(['auth', 'role:admin,logistics'])->group(function () {
 
     Route::resource('loan-details', LoanDetailController::class);
     Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
-
 });
 
 // --- Role: Admin ---
