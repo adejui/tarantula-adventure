@@ -118,22 +118,16 @@
                                     @enderror
                                 </div>
 
-                            </div>
-                        </div>
-
-                        <div class="bg-white rounded-4xl border border-gray-100 p-8 shadow-sm">
-                            <h3 class="text-lg font-bold text-gray-900 mb-6">Informasi Peminjaman</h3>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
                                 <div>
-                                    <label
-                                        class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Tanggal
-                                        Pinjam <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                                        Tanggal Pinjam <span class="text-red-500">*</span>
+                                    </label>
                                     <div class="relative">
-                                        <input type="date" name="borrow_date" value="{{ old('borrow_date') }}"
-                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase
-                                            @error('borrow_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror">
+                                        <input type="date" name="borrow_date" id="borrow_date"
+                                            value="{{ old('borrow_date') }}"
+                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase cursor-pointer
+            @error('borrow_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
+                                            onclick="this.showPicker()">
                                     </div>
                                     @error('borrow_date')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -141,13 +135,15 @@
                                 </div>
 
                                 <div>
-                                    <label
-                                        class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Tanggal
-                                        Pengembalian <span class="text-red-500">*</span></label>
+                                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">
+                                        Tanggal Pengembalian <span class="text-red-500">*</span>
+                                    </label>
                                     <div class="relative">
-                                        <input type="date" name="return_date" value="{{ old('return_date') }}"
-                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase
-                                            @error('return_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror">
+                                        <input type="date" name="return_date" id="return_date"
+                                            value="{{ old('return_date') }}"
+                                            class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-500 uppercase cursor-pointer
+            @error('return_date') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
+                                            onclick="this.showPicker()">
                                     </div>
                                     @error('return_date')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -160,16 +156,17 @@
                                         Peminjaman <span class="text-red-500">*</span></label>
                                     <textarea rows="4" name="notes"
                                         class="w-full bg-gray-50 border rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:bg-white transition-all text-sm font-medium text-gray-900 placeholder-gray-400
-                                        @error('notes') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
+                                                @error('notes') border-red-500 ring-1 ring-red-500 @else border-gray-200 @enderror"
                                         placeholder="Jelaskan keperluan peminjaman secara detail...">{{ old('notes') }}</textarea>
 
                                     @error('notes')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
-
                             </div>
                         </div>
+
+
 
                     </div>
 
@@ -216,4 +213,24 @@
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const borrowInput = document.getElementById('borrow_date');
+            const returnInput = document.getElementById('return_date');
+
+            const today = new Date().toISOString().split('T')[0];
+
+            borrowInput.setAttribute('min', today);
+            returnInput.setAttribute('min', today); 
+
+            borrowInput.addEventListener('change', function() {
+                returnInput.setAttribute('min', this.value);
+
+                if (returnInput.value && returnInput.value < this.value) {
+                    returnInput.value = this.value;
+                }
+            });
+        });
+    </script>
 @endsection

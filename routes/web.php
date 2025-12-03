@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\OpaController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\Dashboard\ItemController;
 use App\Http\Controllers\Dashboard\LoanController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Dashboard\ActivityPhotoController;
 use App\Http\Controllers\Frontend\PublicActivityController;
 use App\Http\Controllers\Dashboard\ActivityMemberController;
 use App\Http\Controllers\Dashboard\ActivityDocumentController;
+
 
 // Route::get('/test-mail', function () {
 //     $loan = App\Models\Loan::first(); // contoh
@@ -40,6 +42,7 @@ Route::get('/test-email', function () {
 // --- FRONTEND ---
 Route::name('frontend.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::get('/inventory/{id}', [InventoryController::class, 'show'])->name('inventory.show');
@@ -57,10 +60,11 @@ Route::name('frontend.')->group(function () {
     Route::post('/inventory/cart/remove/{id}', [InventoryController::class, 'removeFromCart'])->name('inventory.cart.remove');
 
     Route::get('/pinjaman', [PublicLoanController::class, 'pinjamanForm'])->name('pinjaman');
+    Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])->name('pinjaman.store');
+    Route::get('/pinjaman/sukses', [PublicLoanController::class, 'success'])->name('pinjaman.success');
 
-
-    Route::post('/pinjaman/store', [PublicLoanController::class, 'store'])
-        ->name('pinjaman.store');
+    Route::get('/artikel', [PublicArticleController::class, 'index'])->name('artikel');   
+    // Route::get('/artikel/{slug}', [ArticleController::class, 'show'])->name('frontend.articles.show');
 });
 
 
@@ -72,6 +76,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+});
 
 
 // --- BACKEND ---
@@ -98,7 +105,6 @@ Route::middleware(['auth', 'role:admin,logistics'])->group(function () {
     Route::resource('loan-details', LoanDetailController::class);
     Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 // --- Role: Admin ---

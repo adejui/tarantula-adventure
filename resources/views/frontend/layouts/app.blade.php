@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
 </head>
 
-<body x-data="{ loginOpen: {{ $errors->any() ? 'true' : 'false' }} }" class="text-white m-0 p-0 overflow-x-hidden antialiased">
+<body x-data="{ loginOpen: {{ $errors->any() ? 'true' : 'false' }} }" @open-login-modal.window="loginOpen = true" class="text-white m-0 p-0 overflow-x-hidden antialiased">
     <div id="preloader"
         class="fixed inset-0 z-[9999] bg-gray-900 flex items-center justify-center transition-opacity duration-500">
         <div class="flex flex-col items-center gap-4">
@@ -55,7 +55,7 @@
     @include('frontend.partials.login')
 
     <script src="{{ asset('frontend/js/aos.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         /* --- INIT AOS & PRELOADER --- */
         AOS.init({
