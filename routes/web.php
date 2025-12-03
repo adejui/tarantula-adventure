@@ -76,6 +76,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+});
 
 
 // --- BACKEND ---
@@ -102,7 +105,6 @@ Route::middleware(['auth', 'role:admin,logistics'])->group(function () {
     Route::resource('loan-details', LoanDetailController::class);
     Route::post('/loans/{loan}/details', [LoanDetailController::class, 'store'])->name('loan-details.store');
 
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
 // --- Role: Admin ---
