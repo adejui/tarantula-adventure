@@ -18,10 +18,16 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
         ]);
 
+        $remember = $request->has('remember');
 
-        $remember = $request->has('remember'); // Cek apakah checkbox dicentang
         if (Auth::attempt($request->only('email', 'password'), $remember)) {
 
             $request->session()->regenerate();
@@ -40,6 +46,7 @@ class LoginController extends Controller
             'email' => 'Email atau password salah.',
         ])->withInput();
     }
+
 
     public function logout(Request $request)
     {
