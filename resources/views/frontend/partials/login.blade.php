@@ -61,7 +61,7 @@
                             <label
                                 class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Email</label>
 
-                            <input type="email" name="email" value="{{ old('email') }}" required
+                            <input type="email" name="email" value="{{ old('email') }}"
                                 class="block w-full px-4 py-3 border rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm
                                 @error('email') border-red-500 ring-red-500 @else border-gray-200 @enderror"
                                 placeholder="nama@email.com">
@@ -77,9 +77,14 @@
                                     class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Password</label>
                             </div>
 
-                            <input type="password" name="password" required
-                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm"
+                            <input type="password" name="password"
+                                class="block w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-[#7C3AED] focus:border-transparent transition-all outline-none text-sm
+                                @error('password') border-red-500 ring-red-500 @else border-gray-200 @enderror"
                                 placeholder="••••••••">
+
+                            @error('password')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="flex items-center justify-between text-sm">
